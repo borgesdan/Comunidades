@@ -35,6 +35,8 @@ namespace Comunidades.ApiService.Services
             {
                 Name = request.Name,
                 Uid = Guid.NewGuid(),
+                CreationDate = DateTime.Now,
+                Status = Models.Enums.DataStatus.Active,
             };
 
             try

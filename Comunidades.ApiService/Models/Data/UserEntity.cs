@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Comunidades.ApiService.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Comunidades.ApiService.Models.Data
 {
@@ -14,6 +15,12 @@ namespace Comunidades.ApiService.Models.Data
         public string? Name { get; set; }
 
         [Required]
-        public Guid Uid { get; set; }        
+        public Guid Uid { get; set; }
+
+        [Required]
+        public DateTime CreationDate { get; set; }
+
+        [Required]
+        public DataStatus Status { get; set; }
     }
 }
