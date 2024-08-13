@@ -1,10 +1,21 @@
+using Comunidades.ApiService.Repositories;
+using Comunidades.ApiService.Repositories.Contexts;
+using Comunidades.ApiService.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire components.
 builder.AddServiceDefaults();
 
+builder.Services.AddControllers();
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("connectionString", null));
+
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
@@ -30,6 +41,7 @@ app.MapGet("/weatherforecast", () =>
 });
 
 app.MapDefaultEndpoints();
+app.MapControllers();
 
 app.Run();
 

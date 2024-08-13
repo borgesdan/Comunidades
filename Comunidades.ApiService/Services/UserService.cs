@@ -1,4 +1,5 @@
-﻿using Comunidades.ApiService.Models.Data;
+﻿using Comunidades.ApiService.Extensions;
+using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services.Validations;
 
@@ -39,7 +40,7 @@ namespace Comunidades.ApiService.Services
             }
             catch
             {
-                return InternalError();
+                return InternalError(ErrorEnum.InternalDbError.GetDescription());
             }
 
             return Ok();
