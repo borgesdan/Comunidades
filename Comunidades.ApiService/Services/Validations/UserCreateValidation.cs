@@ -1,4 +1,5 @@
 ﻿using Comunidades.ApiService.Extensions;
+using Comunidades.ApiService.Models.Requests;
 using FluentValidation;
 
 namespace Comunidades.ApiService.Services.Validations

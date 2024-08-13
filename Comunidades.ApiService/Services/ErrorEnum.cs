@@ -8,7 +8,7 @@ namespace Comunidades.ApiService.Services
         InternalError = 0,
 
         [Description("Ocorreu um erro interno de acesso ao banco.")]
-        InternalDbError = 0,
+        InternalDbError,
 
         [Description("O nome do usuário deve ser informado.")]
         UserCreateInvalidName = 100

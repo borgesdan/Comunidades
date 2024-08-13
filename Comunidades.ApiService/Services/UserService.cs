@@ -1,15 +1,11 @@
 ﻿using Comunidades.ApiService.Extensions;
 using Comunidades.ApiService.Models.Data;
+using Comunidades.ApiService.Models.Requests;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services.Validations;
 
 namespace Comunidades.ApiService.Services
 {
-    public class UserCreateRequest
-    {
-        public string? Name { get; set; }
-    }
-
     public class UserService : BaseService
     {
         readonly UserRepository userRepository;
