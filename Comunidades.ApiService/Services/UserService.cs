@@ -6,6 +6,9 @@ using Comunidades.ApiService.Services.Validations;
 
 namespace Comunidades.ApiService.Services
 {
+    /// <summary>
+    /// Representa o serviço responsável pelo conexão com os dados do usuário.
+    /// </summary>
     public class UserService : BaseService
     {
         readonly UserRepository userRepository;
@@ -15,6 +18,9 @@ namespace Comunidades.ApiService.Services
             this.userRepository = userRepository;
         }
 
+        /// <summary>
+        /// Cria um novo usuário no banco.
+        /// </summary>
         public async Task<IServiceResult> Create(UserCreateRequest request)
         {
             var validator = new UserCreateValidation();
@@ -27,7 +33,8 @@ namespace Comunidades.ApiService.Services
 
             var entity = new UserEntity
             {
-                Name = request.Name
+                Name = request.Name,
+                Uid = Guid.NewGuid(),
             };
 
             try

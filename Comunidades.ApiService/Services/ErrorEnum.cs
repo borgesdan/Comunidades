@@ -11,6 +11,8 @@ namespace Comunidades.ApiService.Services
         InternalDbError,
 
         [Description("O nome do usuário deve ser informado.")]
-        UserCreateInvalidName = 100
+        UserInvalidName = 100,
+        [Description("O nome do usuário excedeu os limites de caracteres.")]
+        UserNameOutOfRange
     }
 }

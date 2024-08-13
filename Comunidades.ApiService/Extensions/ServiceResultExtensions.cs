@@ -18,15 +18,15 @@ namespace Comunidades.ApiService.Extensions
         }
 
         public async Task ExecuteAsync(HttpContext httpContext)
-        {               
+        {
+            httpContext.Response.StatusCode = (int)serviceResult.StatusCode();
+            httpContext.Response.ContentType = "application/json";
+
             var json = JsonSerializer.Serialize(serviceResult);
             var bytes = Encoding.UTF8.GetBytes(json);
             var readOnlyMemory = new ReadOnlyMemory<byte>(bytes);
             
-            await httpContext.Response.Body.WriteAsync(readOnlyMemory);
-
-            httpContext.Response.StatusCode = (int)serviceResult.StatusCode();
-            httpContext.Response.ContentType = "application/json";
+            await httpContext.Response.Body.WriteAsync(readOnlyMemory);            
         }
     }
 

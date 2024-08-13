@@ -1,4 +1,5 @@
 ﻿using Comunidades.ApiService.Extensions;
+using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Requests;
 using FluentValidation;
 
@@ -10,7 +11,9 @@ namespace Comunidades.ApiService.Services.Validations
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage(ErrorEnum.UserCreateInvalidName.GetDescription());
+                .WithMessage(ErrorEnum.UserInvalidName.GetDescription())
+                .MaximumLength(UserEntity.NameLength)
+                .WithMessage(ErrorEnum.UserNameOutOfRange.GetDescription());
         }
     }
 }
