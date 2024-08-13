@@ -9,11 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add service defaults & Aspire components.
 builder.AddServiceDefaults();
 
-//builder.Services.AddControllers();
-
 // Add services to the container.
 builder.Services.AddProblemDetails();
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("connectionString", null));
+
+var connectionString = builder.Configuration.GetConnectionString("localhost");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString, null));
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();

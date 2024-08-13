@@ -22,5 +22,8 @@ namespace Comunidades.ApiService.Models.Data
 
         [Required]
         public DataStatus Status { get; set; }
+
+        [Required]
+        public DateTime LastModification { get; set; }
     }
 }

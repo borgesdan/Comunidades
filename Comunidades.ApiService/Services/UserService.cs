@@ -37,6 +37,7 @@ namespace Comunidades.ApiService.Services
                 Uid = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
                 Status = Models.Enums.DataStatus.Active,
+                LastModification = DateTime.Now
             };
 
             try
@@ -48,7 +49,7 @@ namespace Comunidades.ApiService.Services
                 return InternalError(ErrorEnum.InternalDbError.GetDescription());
             }
 
-            return Ok();
+            return Ok(entity.Uid.ToString());
         }
     }
 }
