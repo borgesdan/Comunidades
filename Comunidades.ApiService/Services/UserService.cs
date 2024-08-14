@@ -3,6 +3,7 @@ using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Requests;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services.Validations;
+using Comunidades.ApiService.Shared;
 
 namespace Comunidades.ApiService.Services
 {
@@ -27,22 +28,25 @@ namespace Comunidades.ApiService.Services
             var result = validator.Validate(request);
 
             if (!result.IsValid)
-            {
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
-            }
 
             var dateNow = DateTime.Now;
+            const int hashInteration = 3;
+            const string passwordPaper = "_+@#^^^ghty56";
+            string passwordSalt = PasswordHasher.GenerateSalt();
+            string passwordHash = PasswordHasher.ComputeHash(request.Password!, passwordSalt, passwordPaper, hashInteration);
 
             var entity = new UserEntity
             {
                 Name = request.Name,
                 UserName = request.UserName,
                 Email = request.Email,
-                Password = request.Password,
                 Uid = Guid.NewGuid(),
                 Status = Models.Enums.DataStatus.Active,
                 CreationDate = dateNow,
                 LastModification = dateNow,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
             };
 
             try

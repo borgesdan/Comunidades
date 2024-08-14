@@ -32,7 +32,7 @@ namespace Comunidades.ApiService.Services.Validations
             RuleFor(x => x.Password)
                .NotEmpty()
                .WithMessage(ErrorEnum.UserInvalidPassword.GetDescription())
-               .MaximumLength(UserEntity.PasswordLength)
+               .MaximumLength(UserEntity.PasswordToUserLength)
                .WithMessage(ErrorEnum.UserInvalidPassword.GetDescription());
         }
     }

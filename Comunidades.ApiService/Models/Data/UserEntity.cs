@@ -10,11 +10,6 @@ namespace Comunidades.ApiService.Models.Data
     [Table("User")]
     public class UserEntity : BaseEntity
     {
-        public const int NameLength = 256;
-        public const int UserNameLength = 12;
-        public const int EmailLength = 256;
-        public const int PasswordLength = 16;
-
         [Required]
         public Guid Uid { get; set; }
 
@@ -28,11 +23,7 @@ namespace Comunidades.ApiService.Models.Data
 
         [StringLength(EmailLength)]
         [Required(AllowEmptyStrings = false)]
-        public string? Email { get; set; }
-
-        [StringLength(PasswordLength)]
-        [Required(AllowEmptyStrings = false)]
-        public string? Password { get; set; }
+        public string? Email { get; set; }        
 
         [Required]
         public DateTime CreationDate { get; set; }
@@ -42,5 +33,20 @@ namespace Comunidades.ApiService.Models.Data
 
         [Required]
         public DateTime LastModification { get; set; }
+
+        [StringLength(PasswordHashLength)]
+        [Required(AllowEmptyStrings = false)]
+        public string? PasswordHash { get; set; }
+
+        [StringLength(PasswordSaltLength)]
+        [Required(AllowEmptyStrings = false)]
+        public string? PasswordSalt { get; set; }
+
+        public const int NameLength = 256;
+        public const int UserNameLength = 12;
+        public const int EmailLength = 256;
+        public const int PasswordHashLength = 44;
+        public const int PasswordToUserLength = 16;
+        public const int PasswordSaltLength = 24;
     }
 }
