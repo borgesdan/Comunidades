@@ -31,13 +31,18 @@ namespace Comunidades.ApiService.Services
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
             }
 
+            var dateNow = DateTime.Now;
+
             var entity = new UserEntity
             {
                 Name = request.Name,
+                UserName = request.UserName,
+                Email = request.Email,
+                Password = request.Password,
                 Uid = Guid.NewGuid(),
-                CreationDate = DateTime.Now,
                 Status = Models.Enums.DataStatus.Active,
-                LastModification = DateTime.Now
+                CreationDate = dateNow,
+                LastModification = dateNow,
             };
 
             try
