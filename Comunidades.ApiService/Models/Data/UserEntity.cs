@@ -53,7 +53,7 @@ namespace Comunidades.ApiService.Models.Data
         /// <summary>O tamanho máximo da senha fornecida pelo usuário.</summary>
         public const int PasswordToUserMaxLength = 16;
         /// <summary>O tamanho minímo da senha fornecida pelo usuário.</summary>
-        public const int PasswordToUserMinLength = 10;
+        public const int PasswordToUserMinLength = 8;
         /// <summary>O tamanho máximo do valor Salt para senha.</summary>
         public const int PasswordSaltLength = 24;
     }

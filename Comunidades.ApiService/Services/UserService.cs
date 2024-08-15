@@ -10,11 +10,11 @@ namespace Comunidades.ApiService.Services
     /// <summary>
     /// Representa o serviço responsável pelo conexão com os dados do usuário.
     /// </summary>
-    public class UserService : BaseService
+    public class UserService : BaseService, IUserService
     {
-        readonly UserRepository userRepository;
+        readonly IUserRepository userRepository;
 
-        public UserService(UserRepository userRepository) 
+        public UserService(IUserRepository userRepository) 
         {
             this.userRepository = userRepository;
         }
@@ -31,8 +31,8 @@ namespace Comunidades.ApiService.Services
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
             
             const int hashInteration = 3;
-            const string passwordPaper = "paper";
             string passwordSalt = PasswordHasher.GenerateSalt();
+            string passwordPaper = new(passwordSalt.Reverse().ToArray());
             string passwordHash = PasswordHasher.ComputeHash(request.Password!, passwordSalt, passwordPaper, hashInteration);
             var dateNow = DateTime.Now;
 

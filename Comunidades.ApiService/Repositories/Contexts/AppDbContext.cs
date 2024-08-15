@@ -18,8 +18,18 @@ namespace Comunidades.ApiService.Repositories.Contexts
         {
             if (isFirstRun)
             {
-                context.Database.EnsureCreated();
-                isFirstRun = false;
+                try
+                {
+                    context.Database.EnsureCreated();
+                }
+                catch
+                {
+
+                }
+                finally
+                {
+                    isFirstRun = false;
+                }
             }
         }
     }

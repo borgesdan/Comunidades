@@ -13,7 +13,7 @@ namespace Comunidades.ApiService.Enpoints
         }
 
         private static async Task<IResult> Create(
-            UserService userService,
+            IUserService userService,
             [FromBody] UserCreatePostRequest request)
         {
             var result = await userService.Create(request);

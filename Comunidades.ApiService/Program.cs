@@ -15,8 +15,8 @@ builder.Services.AddProblemDetails();
 var connectionString = builder.Configuration.GetConnectionString("localhost");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString, null));
 
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
