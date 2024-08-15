@@ -8,8 +8,10 @@ namespace Comunidades.Tests.Api.Builders
     /// </summary>    
     public abstract class BaseBuilder<T> where T : class
     {
-        /// <summary>Constante que define o local para Brasil.</summary>
+        /// <summary>Constante que define a localização para português do Brasil.</summary>
         protected const string PT_BR = "pt_BR";
+        /// <summary>Constante que define a localização para o inglês.</summary>
+        protected const string EN = "en";
 
         /// <summary>Obtém o objeto Faker para geração de dados.</summary>
         protected Faker FakeBuilder { get; set; }
@@ -29,13 +31,13 @@ namespace Comunidades.Tests.Api.Builders
         /// <summary>
         /// Obtém uma entidade.
         /// </summary>
-        public T? Build() 
+        public T? Get() 
             => Entities.FirstOrDefault();
 
         /// <summary>
         /// Obtém uma lista de entidades.
         /// </summary>
-        public List<T> BuildList()
+        public List<T> GetList()
             => Entities;
 
         /// <summary>
@@ -44,5 +46,10 @@ namespace Comunidades.Tests.Api.Builders
         /// <param name="numberOfItems">Define o número de entidades a serem criadas.</param>
         /// <returns></returns>
         public abstract BaseBuilder<T> Default(int numberOfItems = 1);
+
+        /// <summary>
+        /// Obtém um objeto Person com a localicação de FakerBuilder.
+        /// </summary>
+        protected Person NewPerson() => new(locale: FakeBuilder.Locale);
     }
 }

@@ -4,8 +4,14 @@ using Moq;
 
 namespace Comunidades.Tests.Api
 {
+    /// <summary>
+    /// Representa a unidade base para testes unitários.
+    /// </summary>
     public class BaseTest
     {
+        /// <summary>
+        /// Obtém um mock de AppDbContext.
+        /// </summary>
         protected readonly Mock<AppDbContext> AppDbContextMock;
 
         protected BaseTest() 

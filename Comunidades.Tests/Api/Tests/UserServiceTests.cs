@@ -23,7 +23,7 @@ namespace Comunidades.Tests.Api.Tests
             //Arrange
             var userCreateRequest = new UserCreatePostRequestBuilder()
                 .Default()
-                .Build();
+                .Get();
 
             //Act
             var result = await userService.Object.CreateAsync(userCreateRequest);            

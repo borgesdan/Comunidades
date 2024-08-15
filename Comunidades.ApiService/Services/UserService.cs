@@ -24,18 +24,21 @@ namespace Comunidades.ApiService.Services
         /// </summary>
         public async Task<IServiceResult> CreateAsync(UserCreatePostRequest request)
         {
+            //Validations
             var validator = new UserCreatePostValidation();
             var result = validator.Validate(request);
 
             if (!result.IsValid)
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
-            
+
+            //Hashing a password
             const int hashInteration = 3;
             string passwordSalt = PasswordHasher.GenerateSalt();
             string passwordPaper = new(passwordSalt.Reverse().ToArray());
             string passwordHash = PasswordHasher.ComputeHash(request.Password!, passwordSalt, passwordPaper, hashInteration);
             var dateNow = DateTime.Now;
 
+            //Our entity
             var entity = new UserEntity
             {
                 FullName = request.FullName,
@@ -49,6 +52,7 @@ namespace Comunidades.ApiService.Services
                 PasswordSalt = passwordSalt,
             };
 
+            //Posting to the database
             try
             {
                 await userRepository.CreateAsync(entity);
@@ -58,6 +62,7 @@ namespace Comunidades.ApiService.Services
                 return InternalError(ErrorEnum.InternalDbError.GetDescription());
             }
 
+            //Ok
             return Ok(entity.Uid.ToString());
         }
     }

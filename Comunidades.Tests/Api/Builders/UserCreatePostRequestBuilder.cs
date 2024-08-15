@@ -10,13 +10,13 @@ namespace Comunidades.Tests.Api.Builders
         {
             for (int i = 0; i < numberOfItems; i++) 
             {
-                var person = new Person(locale: PT_BR);
+                var person = NewPerson();
 
                 var entity = new UserCreatePostRequest
                 {
                     FullName = FakeBuilder.Name.FullName(),
                     Email = person.Email,
-                    UserName = person.UserName.Length < UserEntity.UserNameLength ? person.UserName : person.UserName.Substring(0, UserEntity.UserNameLength),
+                    UserName = person.UserName.Length < UserEntity.UserNameLength ? person.UserName : person.UserName[..UserEntity.UserNameLength],
                     Password = FakeBuilder.Random.AlphaNumeric(8)
                 };
 
