@@ -1,11 +1,12 @@
 ﻿using Bogus;
+using Bogus.Extensions.Brazil;
 
 namespace Comunidades.Tests.Api.Builders
 {
     /// <summary>
     /// Representa a classe base para geração de dados falsos.
     /// </summary>    
-    public class BaseBuilder<T> where T : class
+    public abstract class BaseBuilder<T> where T : class
     {
         /// <summary>Constante que define o local para Brasil.</summary>
         protected const string PT_BR = "pt_BR";

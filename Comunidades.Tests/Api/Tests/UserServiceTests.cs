@@ -1,6 +1,7 @@
 ﻿using Comunidades.ApiService.Models.Requests;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services;
+using Comunidades.Tests.Api.Builders;
 using Moq;
 
 namespace Comunidades.Tests.Api.Tests
@@ -20,13 +21,9 @@ namespace Comunidades.Tests.Api.Tests
         public async Task CreateAsyncReturnOk()
         {
             //Arrange
-            var userCreateRequest = new UserCreatePostRequest
-            {
-                FullName = "Full Name User",
-                Email = "danilo@email.com",
-                Password = "password",
-                UserName = "dan.bs."
-            };
+            var userCreateRequest = new UserCreatePostRequestBuilder()
+                .Default()
+                .Build();
 
             //Act
             var result = await userService.Object.CreateAsync(userCreateRequest);            
