@@ -5,26 +5,26 @@ using FluentValidation;
 
 namespace Comunidades.ApiService.Services.Validations
 {
-    public class UserCreateValidation : AbstractValidator<UserCreateRequest>
+    public class UserCreatePostValidation : AbstractValidator<UserCreatePostRequest>
     {
-        public UserCreateValidation() 
+        public UserCreatePostValidation() 
         {
-            RuleFor(x => x.Name)
+            RuleFor(x => x.FullName)
                 .NotEmpty()
-                .WithMessage(ErrorEnum.UserInvalidName.GetDescription())
-                .MaximumLength(UserEntity.NameLength)
-                .WithMessage(ErrorEnum.UserNameOutOfRange.GetDescription());
+                .WithMessage(ErrorEnum.UserInvalidFullName.GetDescription())
+                .MaximumLength(UserEntity.FullNameLength)
+                .WithMessage(ErrorEnum.UserFullNameOutOfRange.GetDescription());
 
             RuleFor(x => x.UserName)
                 .NotEmpty()
                 .WithMessage(ErrorEnum.UserInvalidUserName.GetDescription())
-                .MaximumLength(UserEntity.NameLength)
+                .MaximumLength(UserEntity.UserNameLength)
                 .WithMessage(ErrorEnum.UserUserNameOutOfRange.GetDescription());
 
             RuleFor(x => x.Email)
                .NotEmpty()
                .WithMessage(ErrorEnum.UserInvalidEmail.GetDescription())
-               .MaximumLength(UserEntity.NameLength)
+               .MaximumLength(UserEntity.FullNameLength)
                .WithMessage(ErrorEnum.UserEmailOutOfRange.GetDescription())
                .EmailAddress()
                .WithMessage(ErrorEnum.UserInvalidEmail.GetDescription());
@@ -32,7 +32,9 @@ namespace Comunidades.ApiService.Services.Validations
             RuleFor(x => x.Password)
                .NotEmpty()
                .WithMessage(ErrorEnum.UserInvalidPassword.GetDescription())
-               .MaximumLength(UserEntity.PasswordToUserLength)
+               .MaximumLength(UserEntity.PasswordToUserMaxLength)
+               .WithMessage(ErrorEnum.UserInvalidPassword.GetDescription())
+               .MinimumLength(UserEntity.PasswordToUserMinLength)
                .WithMessage(ErrorEnum.UserInvalidPassword.GetDescription());
         }
     }

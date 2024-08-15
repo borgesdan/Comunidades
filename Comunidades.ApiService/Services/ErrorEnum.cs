@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Comunidades.ApiService.Models.Data;
+using System.ComponentModel;
 
 namespace Comunidades.ApiService.Services
 {
@@ -14,9 +15,9 @@ namespace Comunidades.ApiService.Services
         //
 
         [Description("O nome deve ser informado.")]
-        UserInvalidName = 100,
+        UserInvalidFullName = 100,
         [Description("O nome do usuário excedeu os limites de caracteres.")]
-        UserNameOutOfRange,
+        UserFullNameOutOfRange,
         [Description("O nome de usuário deve ser informado.")]
         UserInvalidUserName,
         [Description("O nome de usuário excedeu os limites de caracteres.")]
@@ -25,7 +26,7 @@ namespace Comunidades.ApiService.Services
         UserInvalidEmail,
         [Description("O email excedeu os limites de caracteres")]
         UserEmailOutOfRange,
-        [Description("A senha informada não é válida.")]
-        UserInvalidPassword,
+        [Description("A senha informada deve ter de 10 a 16 caracteres.")]
+        UserInvalidPassword,        
     }
 }

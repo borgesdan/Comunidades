@@ -22,9 +22,9 @@ namespace Comunidades.ApiService.Services
         /// <summary>
         /// Cria um novo usuário no banco.
         /// </summary>
-        public async Task<IServiceResult> Create(UserCreateRequest request)
+        public async Task<IServiceResult> Create(UserCreatePostRequest request)
         {
-            var validator = new UserCreateValidation();
+            var validator = new UserCreatePostValidation();
             var result = validator.Validate(request);
 
             if (!result.IsValid)
@@ -38,7 +38,7 @@ namespace Comunidades.ApiService.Services
 
             var entity = new UserEntity
             {
-                Name = request.Name,
+                FullName = request.FullName,
                 UserName = request.UserName,
                 Email = request.Email,
                 Uid = Guid.NewGuid(),
