@@ -8,14 +8,22 @@
         /// <summary>
         /// O dado encontra-se ativo.
         /// </summary>
-        Active,
+        Active = 1,
         /// <summary>
         /// O dado encontra-se inativo.
         /// </summary>
-        Inactive,
+        Inactive = 2,
+        /// <summary>
+        /// O dado encontra-se suspenso.
+        /// </summary>
+        Suspended = 3,
+        /// <summary>
+        /// O dado encontra-se banido.
+        /// </summary>
+        Banned = 4,
         /// <summary>
         /// O dado está pronto para ser deletado
         /// </summary>
-        Deleted
+        Deleted = 5
     }
 }
