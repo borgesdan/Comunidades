@@ -1,6 +1,7 @@
 ﻿using Comunidades.ApiService.Extensions;
 using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Requests;
+using Comunidades.ApiService.Models.Responses;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services.Validations;
 using Comunidades.ApiService.Shared;
@@ -17,7 +18,7 @@ namespace Comunidades.ApiService.Services
         public UserService(IUserRepository userRepository) 
         {
             this.userRepository = userRepository;
-        }
+        }        
 
         /// <summary>
         /// Cria um novo usuário no banco.
@@ -63,7 +64,8 @@ namespace Comunidades.ApiService.Services
             }
 
             //Ok
-            return Ok(entity.Uid.ToString());
+            var response = new UserCreatePostResponse() { Uid = entity.Uid };
+            return Ok(response);
         }
     }
 }

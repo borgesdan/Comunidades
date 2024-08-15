@@ -1,4 +1,5 @@
 ﻿using Comunidades.ApiService.Models.Requests;
+using Comunidades.ApiService.Models.Responses;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services;
 using Comunidades.Tests.Api.Builders;
@@ -26,10 +27,13 @@ namespace Comunidades.Tests.Api.Tests
                 .Get();
 
             //Act
-            var result = await userService.Object.CreateAsync(userCreateRequest);            
+            var result = await userService.Object.CreateAsync(userCreateRequest!);            
+            var data = result.GetData<UserCreatePostResponse>();
 
             //Assert
             Assert.True(result.Succeeded);
+            Assert.True(data != null);
+            Assert.True(data.Uid != Guid.Empty);
         }
     }
 }
