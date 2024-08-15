@@ -29,12 +29,12 @@ namespace Comunidades.ApiService.Services
 
             if (!result.IsValid)
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
-
-            var dateNow = DateTime.Now;
+            
             const int hashInteration = 3;
-            const string passwordPaper = "_+@#^^^ghty56";
+            const string passwordPaper = "paper";
             string passwordSalt = PasswordHasher.GenerateSalt();
             string passwordHash = PasswordHasher.ComputeHash(request.Password!, passwordSalt, passwordPaper, hashInteration);
+            var dateNow = DateTime.Now;
 
             var entity = new UserEntity
             {

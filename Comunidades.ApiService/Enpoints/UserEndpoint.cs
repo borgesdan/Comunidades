@@ -9,7 +9,7 @@ namespace Comunidades.ApiService.Enpoints
     {
         public static void UseUserEndpoints(this WebApplication app) 
         {
-            app.MapPost("/api/user/create", Create);
+            app.MapPost("/api/v1/user/create", Create);
         }
 
         private static async Task<IResult> Create(
