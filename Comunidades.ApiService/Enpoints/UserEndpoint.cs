@@ -16,7 +16,7 @@ namespace Comunidades.ApiService.Enpoints
             IUserService userService,
             [FromBody] UserCreatePostRequest request)
         {
-            var result = await userService.Create(request);
+            var result = await userService.CreateAsync(request);
             return result.ToResult();
         }
     }

@@ -4,6 +4,6 @@ namespace Comunidades.ApiService.Services
 {
     public interface IUserService
     {
-        Task<IServiceResult> Create(UserCreatePostRequest request);
+        Task<IServiceResult> CreateAsync(UserCreatePostRequest request);
     }
 }

@@ -22,7 +22,7 @@ namespace Comunidades.ApiService.Services
         /// <summary>
         /// Cria um novo usuário no banco.
         /// </summary>
-        public async Task<IServiceResult> Create(UserCreatePostRequest request)
+        public async Task<IServiceResult> CreateAsync(UserCreatePostRequest request)
         {
             var validator = new UserCreatePostValidation();
             var result = validator.Validate(request);
