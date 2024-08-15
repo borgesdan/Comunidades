@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using Bogus.Extensions.Brazil;
 
 namespace Comunidades.Tests.Api.Builders
 {

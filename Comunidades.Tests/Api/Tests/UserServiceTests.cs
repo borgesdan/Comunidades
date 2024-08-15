@@ -1,5 +1,4 @@
-﻿using Comunidades.ApiService.Models.Requests;
-using Comunidades.ApiService.Models.Responses;
+﻿using Comunidades.ApiService.Models.Responses;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services;
 using Comunidades.Tests.Api.Builders;

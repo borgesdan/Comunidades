@@ -1,5 +1,4 @@
-﻿using Bogus;
-using Comunidades.ApiService.Models.Data;
+﻿using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Requests;
 
 namespace Comunidades.Tests.Api.Builders
