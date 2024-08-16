@@ -26,6 +26,8 @@ namespace Comunidades.ApiService.Services
         [Description("O email excedeu os limites de caracteres")]
         UserEmailOutOfRange,
         [Description("A senha informada deve ser válida e ter de 8 a 16 caracteres.")]
-        UserInvalidPassword,        
+        UserInvalidPassword,
+        [Description("Os dados de entrada são inválidos.")]
+        UserInvalidLogin,
     }
 }

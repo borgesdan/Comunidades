@@ -1,9 +1,7 @@
 ﻿using Comunidades.ApiService.Models.Data;
-using System.Linq.Expressions;
-using System;
 using Comunidades.ApiService.Repositories.Contexts;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Comunidades.ApiService.Repositories
 {
@@ -13,6 +11,8 @@ namespace Comunidades.ApiService.Repositories
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         protected AppDbContext appContext;
+
+        public AppDbContext AppDbContext { get { return appContext; } }
 
         public BaseRepository(AppDbContext appContext)
         {
@@ -56,6 +56,12 @@ namespace Comunidades.ApiService.Repositories
             await appContext.SaveChangesAsync();
 
             return entity;
+        }
+
+        public IQueryable<T> ToQuery() 
+        {
+            var query = appContext.Set<T>().AsQueryable();
+            return query;
         }
     }
 }

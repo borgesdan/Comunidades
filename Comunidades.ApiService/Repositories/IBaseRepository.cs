@@ -14,8 +14,10 @@ namespace Comunidades.ApiService.Repositories
         /// <summary>Obtém um registro do banco de dados.</summary>
         Task<T?> GetAsync(int id);
         /// <summary>Obtém um registro do banco de dados através de uma condição.</summary>
-        Task<T?> GetAsync(Expression<Func<T, bool>> whereExpression);
+        Task<T?> GetAsync(Expression<Func<T, bool>> whereExpression);        
         /// <summary>Obtém todos os registros no banco de dados através de uma condição.</summary>
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression);
+        /// <summary>Obtém um objeto IQueryable para fórmulas de consulta e acesso ao banco.</summary>
+        public IQueryable<T> ToQuery();
     }
 }
