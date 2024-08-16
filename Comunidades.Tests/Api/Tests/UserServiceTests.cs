@@ -3,6 +3,12 @@ using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services;
 using Comunidades.Tests.Api.Builders;
 using Moq;
+using Comunidades.Tests.Api.MockExtensions.Repositories;
+using Microsoft.AspNetCore.Http.Extensions;
+using Comunidades.ApiService.Models.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Azure.Core;
 
 namespace Comunidades.Tests.Api.Tests
 {
@@ -18,7 +24,7 @@ namespace Comunidades.Tests.Api.Tests
         }
 
         [Fact]
-        public async Task CreateAsyncReturnOk()
+        public async Task CreateAsync_ReturnOk()
         {
             //Arrange
             var userCreateRequest = new UserCreatePostRequestBuilder()
@@ -33,6 +39,35 @@ namespace Comunidades.Tests.Api.Tests
             Assert.True(result.Succeeded);
             Assert.True(data != null);
             Assert.True(data.Uid != Guid.Empty);
+        }
+
+        [Fact]
+        public async Task LoginAsync_ReturnOk()
+        {
+            //Arrange
+            var request = new UserLoginPostRequestBuilder()
+                .Default()
+                .Get();
+
+            //Act
+            var passwordHash = UserService.GetPasswordHash(request!.Password!, "0");
+
+            var userEntity = new UserEntity()
+            {
+                Email = request.Email,
+                PasswordHash = passwordHash.Hash,
+                PasswordSalt = "0",
+            };           
+            
+            userRepository.MockSelectAsync(userEntity);
+
+            var result = await userService.Object.LoginAsync(request);
+            var data = result.GetData<UserLoginPostResponse>();
+
+            //Assert
+            Assert.True(result.Succeeded);
+            Assert.True(data != null);
+            Assert.True(!string.IsNullOrWhiteSpace(data.Token));
         }
     }
 }

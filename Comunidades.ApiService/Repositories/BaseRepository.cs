@@ -19,7 +19,7 @@ namespace Comunidades.ApiService.Repositories
             this.appContext = appContext ?? throw new ArgumentNullException(nameof(appContext));
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public virtual async Task<T> CreateAsync(T entity)
         {
             appContext.Add(entity);
             await appContext.SaveChangesAsync();
@@ -27,7 +27,7 @@ namespace Comunidades.ApiService.Repositories
             return entity;
         }
 
-        public async Task<bool> DeleteAsync(T entity)
+        public virtual async Task<bool> DeleteAsync(T entity)
         {
             appContext.Remove(entity);
             var result = await appContext.SaveChangesAsync();
@@ -35,22 +35,22 @@ namespace Comunidades.ApiService.Repositories
             return result != 0;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression)
         {
             return await appContext.Set<T>().Where(whereExpression).ToListAsync();
         }
 
-        public async Task<T?> GetAsync(int id)
+        public virtual async Task<T?> GetAsync(int id)
         {
             return await appContext.Set<T>().Where(e => e.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<T?> GetAsync(Expression<Func<T, bool>> whereExpression)
+        public virtual async Task<T?> GetAsync(Expression<Func<T, bool>> whereExpression)
         {
             return await appContext.Set<T>().Where(whereExpression).FirstOrDefaultAsync();
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
             appContext.Update(entity);
             await appContext.SaveChangesAsync();
@@ -58,10 +58,19 @@ namespace Comunidades.ApiService.Repositories
             return entity;
         }
 
-        public IQueryable<T> ToQuery() 
+        public virtual IQueryable<T> ToQuery() 
         {
             var query = appContext.Set<T>().AsQueryable();
             return query;
+        }
+
+        public virtual Task<T?> SelectAsync(Expression<Func<T, T>> expression, Expression<Func<T, bool>> whereExpression)
+        {
+            var query = ToQuery();
+            query = query.Select(expression);
+            query = query.Where(whereExpression);
+
+            return query.FirstOrDefaultAsync();
         }
     }
 }

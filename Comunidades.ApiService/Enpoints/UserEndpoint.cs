@@ -10,13 +10,18 @@ namespace Comunidades.ApiService.Enpoints
         public static void UseUserEndpoints(this WebApplication app) 
         {
             app.MapPost("/api/v1/user/create", Create);
+            app.MapPost("/api/v1/user/login", Login);
         }
 
-        private static async Task<IResult> Create(
-            IUserService userService,
-            [FromBody] UserCreatePostRequest request)
+        private static async Task<IResult> Create(IUserService userService, [FromBody] UserCreatePostRequest request)
         {
             var result = await userService.CreateAsync(request);
+            return result.ToResult();
+        }
+
+        private static async Task<IResult> Login(IUserService userService, [FromBody]UserLoginPostRequest request)
+        {
+            var result = await userService.LoginAsync(request);
             return result.ToResult();
         }
     }

@@ -3,6 +3,6 @@
 namespace Comunidades.ApiService.Repositories
 {
     public interface IUserRepository : IBaseRepository<UserEntity>
-    {
+    {        
     }
 }

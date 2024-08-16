@@ -27,9 +27,10 @@ namespace Comunidades.ApiService.Services
         /// </summary>
         public async Task<IServiceResult> CreateAsync(UserCreatePostRequest request)
         {
+            request.Sanitize();
+
             //Validations
-            var validator = new UserCreatePostValidation();
-            var result = validator.Validate(request);
+            var result = ValidatorHelper.Validate<UserCreatePostValidation, UserCreatePostRequest>(request);
 
             if (!result.IsValid)
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
@@ -82,7 +83,7 @@ namespace Comunidades.ApiService.Services
 
             var result = ValidatorHelper.Validate<UserLoginPostValidation, UserLoginPostRequest>(request);
 
-            if(!result.IsValid)
+            if (!result.IsValid)
                 return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
 
             //Acesso ao banco
@@ -90,12 +91,14 @@ namespace Comunidades.ApiService.Services
 
             try
             {
-                var userEntity = await userRepository.ToQuery()
-                    .Select(e => new { e.PasswordHash, e.PasswordSalt, e.Email })
-                    .Where(e => e.Email == request.Email)                    
-                    .FirstOrDefaultAsync();
+                var userEntity = await userRepository.SelectAsync(e => new UserEntity()
+                {
+                    PasswordHash = e.PasswordHash,
+                    PasswordSalt = e.PasswordSalt,
+                    Email = e.Email
+                }, e => e.Email == request.Email);
 
-                if (userEntity == null) 
+                if (userEntity == null)
                 {
                     return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
                 }
@@ -121,7 +124,7 @@ namespace Comunidades.ApiService.Services
         /// <summary>
         /// Obtém um objeto PasswordHash. O salt será criado internamente caso seja nulo.
         /// </summary>        
-        static private PasswordHash GetPasswordHash(string password, string? salt = null)
+        static public PasswordHash GetPasswordHash(string password, string? salt = null)
         {
             salt ??= PasswordHasher.GenerateSalt();
 
@@ -137,7 +140,7 @@ namespace Comunidades.ApiService.Services
         }
     }
 
-    internal class PasswordHash()
+    public class PasswordHash()
     {
         public string? Hash { get; set; }
         public string? Salt { get; set; }
