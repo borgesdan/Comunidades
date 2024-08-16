@@ -64,13 +64,21 @@ namespace Comunidades.ApiService.Repositories
             return query;
         }
 
-        public virtual Task<T?> SelectAsync(Expression<Func<T, T>> expression, Expression<Func<T, bool>> whereExpression)
+        public virtual async Task<T?> SelectAsync(Expression<Func<T, T>> selector, Expression<Func<T, bool>> whereExpression)
         {
             var query = ToQuery();
-            query = query.Select(expression);
+            query = query.Select(selector);
             query = query.Where(whereExpression);
 
-            return query.FirstOrDefaultAsync();
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public virtual async Task<TSeletedType?> SelectAsync<TSeletedType>(Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression)
+        {
+            var query = ToQuery();
+            query = query.Where(whereExpression);
+            var query2 = query.Select(selector);
+            return await query2.FirstOrDefaultAsync();
         }
     }
 }

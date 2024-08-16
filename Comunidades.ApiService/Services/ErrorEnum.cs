@@ -29,5 +29,7 @@ namespace Comunidades.ApiService.Services
         UserInvalidPassword,
         [Description("Os dados de entrada são inválidos.")]
         UserInvalidLogin,
+        [Description("O email informado já está cadastrado.")]
+        UserRegisterInvalidEmail
     }
 }

@@ -58,8 +58,11 @@ namespace Comunidades.ApiService.Services
 
             //Posting to the database
             try
-            {
-                //TODO: verificar se o email já existe
+            {               
+                var mathEmailEntity = await userRepository.SelectAsync(e => new UserEntity() { Email = e.Email}, e => e.Email == request.Email);
+
+                if (mathEmailEntity != null)
+                    return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
 
                 await userRepository.CreateAsync(entity);
             }

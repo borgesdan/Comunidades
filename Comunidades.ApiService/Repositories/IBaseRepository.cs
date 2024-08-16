@@ -24,6 +24,12 @@ namespace Comunidades.ApiService.Repositories
         /// </summary>
         /// <param name="expression">A expressão com os dados de T a serem selecionados.</param>
         /// <param name="whereExpression">A expressão de condição da consulta</param>
-        Task<T?> SelectAsync(Expression<Func<T, T>> expression, Expression<Func<T, bool>> whereExpression);
+        Task<T?> SelectAsync(Expression<Func<T, T>> selector, Expression<Func<T, bool>> whereExpression);
+        /// <summary>
+        /// Realiza um select na base de dados com a informação do tipo de destino.
+        /// </summary>
+        /// <param name="expression">A expressão com os dados de T a serem selecionados para o tipo de destino.</param>
+        /// <param name="whereExpression">A expressão de condição da consulta</param>
+        Task<TSeletedType?> SelectAsync<TSeletedType>(Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression);
     }
 }
