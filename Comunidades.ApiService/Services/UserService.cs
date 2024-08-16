@@ -103,7 +103,7 @@ namespace Comunidades.ApiService.Services
                     return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
                 }
 
-                var requestHash = GetPasswordHash(request.Password!, userEntity.PasswordSalt);
+                var requestHash = Password.GetPasswordHash(request.Password!, userEntity.PasswordSalt);
 
                 if (userEntity.PasswordHash != requestHash.Hash)
                     return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
@@ -121,28 +121,6 @@ namespace Comunidades.ApiService.Services
             return Ok(response);
         }
 
-        /// <summary>
-        /// Obtém um objeto PasswordHash. O salt será criado internamente caso seja nulo.
-        /// </summary>        
-        static public PasswordHash GetPasswordHash(string password, string? salt = null)
-        {
-            salt ??= PasswordHasher.GenerateSalt();
-
-            const int hashInteration = 3;
-            string passwordPaper = new(salt.Reverse().ToArray());
-            string passwordHash = PasswordHasher.ComputeHash(password, salt, passwordPaper, hashInteration);
-
-            return new PasswordHash()
-            {
-                Hash = passwordHash,
-                Salt = salt,
-            };
-        }
-    }
-
-    public class PasswordHash()
-    {
-        public string? Hash { get; set; }
-        public string? Salt { get; set; }
-    }
+        
+    }    
 }

@@ -1,14 +1,11 @@
-﻿using Comunidades.ApiService.Models.Responses;
+﻿using Comunidades.ApiService.Models.Data;
+using Comunidades.ApiService.Models.Responses;
 using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services;
+using Comunidades.ApiService.Shared;
 using Comunidades.Tests.Api.Builders;
-using Moq;
 using Comunidades.Tests.Api.MockExtensions.Repositories;
-using Microsoft.AspNetCore.Http.Extensions;
-using Comunidades.ApiService.Models.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Azure.Core;
+using Moq;
 
 namespace Comunidades.Tests.Api.Tests
 {
@@ -50,7 +47,7 @@ namespace Comunidades.Tests.Api.Tests
                 .Get();
 
             //Act
-            var passwordHash = UserService.GetPasswordHash(request!.Password!, "0");
+            var passwordHash = Password.GetPasswordHash(request!.Password!, "0");
 
             var userEntity = new UserEntity()
             {
