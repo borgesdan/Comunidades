@@ -10,7 +10,7 @@ namespace Comunidades.ApiService.Shared
         public static string Generate(DateTime expireDate, params Claim[] claims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("Key");
+            var key = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
             var claimsIdentity = new ClaimsIdentity(claims);
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
             var tokenDescriptor = new SecurityTokenDescriptor()

@@ -7,6 +7,7 @@ using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services.Validations;
 using Comunidades.ApiService.Shared;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Comunidades.ApiService.Services
 {
@@ -111,9 +112,11 @@ namespace Comunidades.ApiService.Services
                 if (userEntity.PasswordHash != requestHash.Hash)
                     return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
 
+                var token = BearerToken.Generate(DateTime.Now.Add(TimeSpan.FromDays(30)));
+
                 response = new UserLoginPostResponse()
                 {
-                    Token = "TODO: Gerar Token",
+                    Token = token,
                 };
             }
             catch
