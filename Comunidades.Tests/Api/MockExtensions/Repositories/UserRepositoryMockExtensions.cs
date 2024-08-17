@@ -18,9 +18,9 @@ namespace Comunidades.Tests.Api.MockExtensions.Repositories
             .Setup(m => m.ToQuery())
             .Returns(@return);
 
-        public static void MockSelectAsync(this Mock<UserRepository> mock, UserEntity @return)
+        public static void MockSelectAsync<TSeletedType>(this Mock<UserRepository> mock, TSeletedType @return) 
             => mock
-            .Setup(m => m.SelectAsync(It.IsAny< Expression<Func<UserEntity, UserEntity>>>(), It.IsAny<Expression<Func<UserEntity, bool>>>()))
+            .Setup(m => m.SelectAsync(It.IsAny<Expression<Func<UserEntity, TSeletedType>>>(), It.IsAny<Expression<Func<UserEntity, bool>>>()))
             .ReturnsAsync(@return);
     }
 }

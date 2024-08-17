@@ -59,7 +59,7 @@ namespace Comunidades.ApiService.Services
             //Posting to the database
             try
             {               
-                var mathEmailEntity = await userRepository.SelectAsync(e => new UserEntity() { Email = e.Email}, e => e.Email == request.Email);
+                var mathEmailEntity = await userRepository.SelectAsync(e =>  new UserEntity() {Email = e.Email}, e => e.Email == request.Email);
 
                 if (mathEmailEntity != null)
                     return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());

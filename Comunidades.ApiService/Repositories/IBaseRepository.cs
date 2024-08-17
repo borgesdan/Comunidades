@@ -18,13 +18,7 @@ namespace Comunidades.ApiService.Repositories
         /// <summary>Obtém todos os registros no banco de dados através de uma condição.</summary>
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression);
         /// <summary>Obtém um objeto IQueryable para fórmulas de consulta e acesso ao banco.</summary>
-        public IQueryable<T> ToQuery();
-        /// <summary>
-        /// Realiza um select na base de dados.
-        /// </summary>
-        /// <param name="expression">A expressão com os dados de T a serem selecionados.</param>
-        /// <param name="whereExpression">A expressão de condição da consulta</param>
-        Task<T?> SelectAsync(Expression<Func<T, T>> selector, Expression<Func<T, bool>> whereExpression);
+        public IQueryable<T> ToQuery();        
         /// <summary>
         /// Realiza um select na base de dados com a informação do tipo de destino.
         /// </summary>
