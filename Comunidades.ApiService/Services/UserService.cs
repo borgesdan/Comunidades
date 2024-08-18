@@ -90,11 +90,11 @@ namespace Comunidades.ApiService.Services
             if (!result.IsValid)
                 return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
 
-            //Acesso ao banco
-            UserLoginPostResponse? response = null;
-
             try
             {
+                //Acesso ao banco
+                UserLoginPostResponse? response = null;
+
                 var userEntity = await userRepository.SelectAsync(e => new UserEntity()
                 {
                     PasswordHash = e.PasswordHash,
@@ -118,15 +118,13 @@ namespace Comunidades.ApiService.Services
                 {
                     Token = token,
                 };
+
+                return Ok(response);
             }
             catch
             {
                 return InternalError(ErrorEnum.InternalDbError.GetDescription());
-            }
-
-            return Ok(response);
-        }
-
-        
+            }            
+        }        
     }    
 }

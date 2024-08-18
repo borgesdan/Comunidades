@@ -15,6 +15,17 @@ namespace Comunidades.ApiService.Repositories.Contexts
                 EnsureCreated(this);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var userModel = modelBuilder.Entity<UserEntity>();
+
+            userModel
+                .HasIndex(e => e.Email)
+                .IsUnique();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public static void EnsureCreated(AppDbContext context)
         {
             if (isFirstRun)

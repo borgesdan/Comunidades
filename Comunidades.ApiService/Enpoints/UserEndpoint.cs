@@ -9,8 +9,13 @@ namespace Comunidades.ApiService.Enpoints
     {
         public static void UseUserEndpoints(this WebApplication app) 
         {
-            app.MapPost("/api/v1/user/create", Create);
-            app.MapPost("/api/v1/user/login", Login);
+            app.MapPost("/api/v1/user/create", Create)
+                .WithGroupName("User");
+
+            app.MapPost("/api/v1/user/login", Login)
+                .WithGroupName("User")
+                .WithSummary("Executa login do usuário");
+
         }
 
         private static async Task<IResult> Create(IUserService userService, [FromBody] UserCreatePostRequest request)
@@ -23,6 +28,6 @@ namespace Comunidades.ApiService.Enpoints
         {
             var result = await userService.LoginAsync(request);
             return result.ToResult();
-        }
+        }        
     }
 }
