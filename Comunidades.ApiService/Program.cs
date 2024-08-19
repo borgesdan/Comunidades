@@ -1,4 +1,5 @@
 using Comunidades.ApiService.Enpoints;
+using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Repositories.Contexts;
 using Comunidades.ApiService.Repositories.Interfaces;
 using Comunidades.ApiService.Services;

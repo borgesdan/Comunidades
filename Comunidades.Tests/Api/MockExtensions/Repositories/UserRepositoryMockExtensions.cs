@@ -1,5 +1,5 @@
 ﻿using Comunidades.ApiService.Models.Data;
-using Comunidades.ApiService.Repositories.Interfaces;
+using Comunidades.ApiService.Repositories;
 using Moq;
 using System;
 using System.Linq.Expressions;

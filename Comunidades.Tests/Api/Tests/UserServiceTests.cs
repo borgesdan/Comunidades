@@ -1,6 +1,6 @@
 ﻿using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Responses;
-using Comunidades.ApiService.Repositories.Interfaces;
+using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Services;
 using Comunidades.ApiService.Shared;
 using Comunidades.Tests.Api.Builders;
