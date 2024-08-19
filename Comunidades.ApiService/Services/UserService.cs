@@ -37,10 +37,7 @@ namespace Comunidades.ApiService.Services
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
 
             //Hashing a password
-            const int hashInteration = 3;
-            string passwordSalt = PasswordHasher.GenerateSalt();
-            string passwordPaper = new(passwordSalt.Reverse().ToArray());
-            string passwordHash = PasswordHasher.ComputeHash(request.Password!, passwordSalt, passwordPaper, hashInteration);
+            var password = Password.GetPasswordHash(request.Password!);
             var dateNow = DateTime.Now;
 
             //Our entity
@@ -53,19 +50,23 @@ namespace Comunidades.ApiService.Services
                 Status = Models.Enums.DataStatus.Active,
                 CreationDate = dateNow,
                 LastModification = dateNow,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
+                PasswordHash = password.Hash,
+                PasswordSalt = password.Salt,
             };
 
             //Posting to the database
             try
-            {               
-                var matchedEmailEntity = await userRepository.SelectAsync(e =>  new UserEntity() {Email = e.Email}, e => e.Email == request.Email);
+            {
+                var matchedEmailEntity = await userRepository.SelectAsync(e => new UserEntity() { Email = e.Email }, e => e.Email == request.Email);
 
                 if (matchedEmailEntity != null)
                     return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
 
                 await userRepository.CreateAsync(entity);
+            }
+            catch(DbUpdateException)
+            {
+                return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
             }
             catch
             {

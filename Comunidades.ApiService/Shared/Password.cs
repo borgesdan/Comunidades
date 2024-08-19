@@ -10,11 +10,9 @@ namespace Comunidades.ApiService.Shared
         /// <summary>
         /// Obtém um objeto PasswordHash. O salt será criado internamente caso seja nulo.
         /// </summary>        
-        static public Password GetPasswordHash(string password, string? salt = null)
+        static public Password GetPasswordHash(string password, string? salt = null, int hashInteration = 3)
         {
             salt ??= PasswordHasher.GenerateSalt();
-
-            const int hashInteration = 3;
             string passwordPaper = new(salt.Reverse().ToArray());
             string passwordHash = PasswordHasher.ComputeHash(password, salt, passwordPaper, hashInteration);
 

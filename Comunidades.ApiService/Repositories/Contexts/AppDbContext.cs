@@ -9,10 +9,9 @@ namespace Comunidades.ApiService.Repositories.Contexts
 
         public DbSet<UserEntity>? UserEntities { get; set; }
 
-        public AppDbContext(DbContextOptions dbContextOptions, bool ensureCreate = false) : base(dbContextOptions) 
+        public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) 
         {
-            if(ensureCreate)
-                EnsureCreated(this);
+            EnsureCreated(this);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
