@@ -11,7 +11,7 @@ namespace Comunidades.ApiService.Repositories.Contexts
 
         public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) 
         {
-            EnsureCreated(this);
+            //EnsureCreated(this);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
