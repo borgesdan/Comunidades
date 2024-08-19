@@ -15,35 +15,39 @@ namespace Comunidades.ApiService.Models.Data
 
         [StringLength(FullNameLength)]
         [Required(AllowEmptyStrings = false)]
-        public string? FullName { get; set; }
+        public string FullName { get; set; } = null!;
 
         [StringLength(UserNameLength)]
         [Required(AllowEmptyStrings = false)]
-        public string? UserName { get; set; }
+        public string UserName { get; set; } = null!;
 
         [StringLength(EmailLength)]
         [Required(AllowEmptyStrings = false)]
-        public string? Email { get; set; }        
+        public string Email { get; set; } = null!;
 
         [Required]
-        public DateTime CreationDate { get; set; }
-
-        [Required]
-        public DataStatus Status { get; set; }
+        public DateTime CreationDate { get; set; }        
 
         [Required]
         public DateTime LastModification { get; set; }
 
+        [Required]
+        public DataStatus Status { get; set; }
+
         [StringLength(PasswordHashLength)]
         [Required(AllowEmptyStrings = false)]
-        public string? PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = null!;
 
         [StringLength(PasswordSaltLength)]
         [Required(AllowEmptyStrings = false)]
-        public string? PasswordSalt { get; set; }
+        public string PasswordSalt { get; set; } = null!;
 
-        /// <summary>O tamanho máximo para um nome.</summary>
-        public const int FullNameLength = 256;
+        public ICollection<CommunityEntity> Communities { get; set; } = [];
+
+        /// <summary>
+        /// O tamanho máximo para um nome. O valor representa o número de caracteres do nome de D. Pedro I.
+        /// </summary>
+        public const int FullNameLength = 146;
         /// <summary>O tamanho máximo para um apelido.</summary>
         public const int UserNameLength = 12;
         /// <summary>O tamanho máximo para um email.</summary>
