@@ -9,13 +9,13 @@ namespace Comunidades.ApiService.Services
         bool Succeeded { get; }
         /// <summary>Obtém uma mensagem do resultado da solicitação.</summary>
         string? Message { get; }
+        /// <summary>Obtém um objeto relacionado a resposta.</summary>
+        object? Data { get; }
         /// <summary>Obtém o código de estado da solicitação.</summary>
         HttpStatusCode StatusCode();
         /// <summary>Obtém o conteúdo da resposta pelo tipo especificado.</summary>
         /// <typeparam name="T">O tipo de dado esperado, onde T é uma classe. Caso o tipo seja inválido retorna null.</typeparam>
         TData? GetData<TData>() where TData : class;
-        /// <summary> Obtém os dados incorporados ao retorno do serviço como um tipo objeto. </summary>
-        object? GetData();
     }
 
     /// <summary>Representa um retorno do resultado da solicitação de um serviço.</summary>
@@ -25,6 +25,7 @@ namespace Comunidades.ApiService.Services
 
         public bool Succeeded { get; protected set; }
         public string? Message { get; protected set; }
+        public virtual object? Data { get; protected set; } = null;
 
         public ServiceResult(bool succeeded, string? message, HttpStatusCode statusCode)
         {
@@ -40,15 +41,11 @@ namespace Comunidades.ApiService.Services
 
         public virtual T? GetData<T>() where T : class
             => null;
-
-        public virtual object? GetData() { return null; }
     }
 
     /// <summary>Representa um retorno do resultado da solicitação de um serviço com um tipo específico.</summary>
-    public class ServiceResult<T> : ServiceResult where T : class
+    public class ServiceResult<T> : ServiceResult
     {
-        public T? Data { get; protected set; }
-
         public ServiceResult(bool succeeded, string? message, HttpStatusCode statusCode, T? data)
             : base(succeeded, message, statusCode)
         {
@@ -61,11 +58,6 @@ namespace Comunidades.ApiService.Services
                 return tdata;
 
             return null;
-        }
-
-        public override object? GetData()
-        {
-            return Data;
         }
     }
 }

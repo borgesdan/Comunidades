@@ -41,7 +41,7 @@ namespace Comunidades.ApiService.Extensions
         public static IActionResult ToActionResult(this IServiceResult serviceResult)
         {
             var result = new ObjectResult(serviceResult)
-            {
+            {                
                 StatusCode = (int)serviceResult!.StatusCode()
             };
 
