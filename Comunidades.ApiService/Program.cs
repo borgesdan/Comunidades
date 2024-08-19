@@ -1,7 +1,8 @@
 using Comunidades.ApiService.Enpoints;
-using Comunidades.ApiService.Repositories;
 using Comunidades.ApiService.Repositories.Contexts;
+using Comunidades.ApiService.Repositories.Interfaces;
 using Comunidades.ApiService.Services;
+using Comunidades.ApiService.Services.Interfaces;
 using Comunidades.ApiService.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

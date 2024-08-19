@@ -1,5 +1,6 @@
 ﻿using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Repositories.Contexts;
+using Comunidades.ApiService.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

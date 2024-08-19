@@ -1,6 +1,6 @@
 ﻿using Comunidades.ApiService.Extensions;
 using Comunidades.ApiService.Models.Requests;
-using Comunidades.ApiService.Services;
+using Comunidades.ApiService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Comunidades.ApiService.Enpoints

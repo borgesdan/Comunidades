@@ -1,6 +1,6 @@
 ﻿using Comunidades.ApiService.Models.Requests;
 
-namespace Comunidades.ApiService.Services
+namespace Comunidades.ApiService.Services.Interfaces
 {
     public interface IUserService
     {
