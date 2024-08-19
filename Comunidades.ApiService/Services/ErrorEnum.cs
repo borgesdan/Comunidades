@@ -4,10 +4,16 @@ namespace Comunidades.ApiService.Services
 {
     public enum ErrorEnum
     {
+        //
+        // Internal
+        //
+
         [Description("Ocorreu um erro interno.")]
         InternalError = 0,
         [Description("Ocorreu um erro interno de acesso ao banco.")]
         InternalDbError,
+        [Description("Ocorreu um erro não experado ao criar a comunidad.")]
+        InternalCreateCommunityError,
 
         //
         // User
@@ -30,6 +36,21 @@ namespace Comunidades.ApiService.Services
         [Description("Os dados de entrada são inválidos.")]
         UserInvalidLogin,
         [Description("O email informado já está cadastrado.")]
-        UserRegisterInvalidEmail
+        UserRegisterInvalidEmail,
+
+        //
+        // Community
+        //
+
+        [Description("O nome da comunidade deve ser informado.")]
+        CommunityEmptyName = 200,
+        [Description("O nome do comunidade excedeu os limites de caracteres.")]
+        CommunityNameOutOfRange,
+        [Description("A descrição da comunidade deve ser informada.")]
+        CommunityEmptyDescription,
+        [Description("A descrição da comunidade excedeu os limites de caracteres.")]
+        CommunityDescriptionOutOfRange,
+        [Description("O criador da comunidade é inválido ou não foi informado.")]
+        CommunityInvalidCreator
     }
 }

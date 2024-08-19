@@ -1,8 +1,11 @@
-﻿using Comunidades.ApiService.Models.Data;
+﻿using Comunidades.ApiService.Extensions;
+using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Enums;
 using Comunidades.ApiService.Models.Requests;
+using Comunidades.ApiService.Models.Responses;
 using Comunidades.ApiService.Repositories.Interfaces;
 using Comunidades.ApiService.Services.Interfaces;
+using Comunidades.ApiService.Services.Validations;
 
 namespace Comunidades.ApiService.Services
 {
@@ -21,13 +24,18 @@ namespace Comunidades.ApiService.Services
         {
             request.Sanitize();
 
+            var validatorResult = ValidatorHelper.Validate<CommunityCreatePostValidation, CommunityCreatePostRequest>(request);
+
+            if (!validatorResult.IsValid)
+                return BadRequest(validatorResult.Errors.FirstOrDefault()?.ErrorMessage);
+
             try
             {
                 //Obtém o criador pelo Uid
                 var userCreatorId = await userRepository.SelectAsync(u => u.Id, u => u.Uid == request.CreatorUid);
 
                 if (userCreatorId == 0)
-                    return BadRequest();
+                    return BadRequest(ErrorEnum.CommunityInvalidCreator);
 
                 var dateNow = DateTime.Now;
 
@@ -42,13 +50,18 @@ namespace Comunidades.ApiService.Services
                     Name = request.Name!,
                 };
 
-                await communityRepository.CreateAsync(community);
-                return Ok();
+                var createResult = await communityRepository.CreateAsync(community);
 
+                if (createResult == 0)
+                    return InternalError(ErrorEnum.InternalCreateCommunityError);
+
+                var response = new CommunityCreatePostResponse() { Uid = community.Uid };
+
+                return Ok(response);
             }
-            catch (Exception ex) 
+            catch
             {
-                return InternalError();
+                return InternalError(ErrorEnum.InternalDbError);
             }
         }
     }

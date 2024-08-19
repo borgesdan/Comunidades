@@ -45,6 +45,7 @@ builder.Services.AddAuthentication(x =>
 var app = builder.Build();
 
 app.UseUserEndpoints();
+app.UseCommunityEndpoints();
 
 app.UseCors(x => x
 .AllowAnyOrigin()
