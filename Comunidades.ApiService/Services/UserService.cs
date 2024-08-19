@@ -30,17 +30,17 @@ namespace Comunidades.ApiService.Services
         {
             request.Sanitize();
 
-            //Validations
+            //Validações
             var result = ValidatorHelper.Validate<UserCreatePostValidation, UserCreatePostRequest>(request);
 
             if (!result.IsValid)
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
 
-            //Hashing a password
+            //Definição do hash do password
             var password = Password.GetPasswordHash(request.Password!);
             var dateNow = DateTime.Now;
 
-            //Our entity
+            //Nossa entidade
             var entity = new UserEntity
             {
                 FullName = request.FullName,
@@ -54,9 +54,10 @@ namespace Comunidades.ApiService.Services
                 PasswordSalt = password.Salt,
             };
 
-            //Posting to the database
+            //Postagem no banco
             try
             {
+                //Validação de email já existente.
                 var matchedEmailEntity = await userRepository.SelectAsync(e => new UserEntity() { Email = e.Email }, e => e.Email == request.Email);
 
                 if (matchedEmailEntity != null)
@@ -66,6 +67,7 @@ namespace Comunidades.ApiService.Services
             }
             catch(DbUpdateException)
             {
+                //Caso a validação anterior falhe, a exceção DbUpdateException significa que o email já existia no banco
                 return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
             }
             catch
