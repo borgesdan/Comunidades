@@ -6,11 +6,11 @@ namespace Comunidades.ApiService.Repositories.Interfaces
     public interface IBaseRepository<T> where T : BaseEntity
     {
         /// <summary>Cria um novo registro no banco de dados.</summary>
-        Task<T> CreateAsync(T entity);
+        Task<int> CreateAsync(T entity);
         /// <summary>Atualiza um registro no banco de dados.</summary>
-        Task<T> UpdateAsync(T entity);
+        Task<int> UpdateAsync(T entity);
         /// <summary>Deleta um registro no banco de dados.</summary>
-        Task<bool> DeleteAsync(T entity);
+        Task<int> DeleteAsync(T entity);
         /// <summary>Obtém um registro do banco de dados.</summary>
         Task<T?> GetAsync(int id);
         /// <summary>Obtém um registro do banco de dados através de uma condição.</summary>

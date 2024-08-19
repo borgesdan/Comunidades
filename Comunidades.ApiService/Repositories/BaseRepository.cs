@@ -20,20 +20,20 @@ namespace Comunidades.ApiService.Repositories
             this.appContext = appContext ?? throw new ArgumentNullException(nameof(appContext));
         }
 
-        public virtual async Task<T> CreateAsync(T entity)
+        public virtual async Task<int> CreateAsync(T entity)
         {
             appContext.Add(entity);
-            await appContext.SaveChangesAsync();
+            var entriesWritten = await appContext.SaveChangesAsync();
 
-            return entity;
+            return entriesWritten;
         }
 
-        public virtual async Task<bool> DeleteAsync(T entity)
+        public virtual async Task<int> DeleteAsync(T entity)
         {
             appContext.Remove(entity);
-            var result = await appContext.SaveChangesAsync();
+            var entriesWritten = await appContext.SaveChangesAsync();
 
-            return result != 0;
+            return entriesWritten;
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression)
@@ -51,12 +51,12 @@ namespace Comunidades.ApiService.Repositories
             return await appContext.Set<T>().Where(whereExpression).FirstOrDefaultAsync();
         }
 
-        public virtual async Task<T> UpdateAsync(T entity)
+        public virtual async Task<int> UpdateAsync(T entity)
         {
             appContext.Update(entity);
-            await appContext.SaveChangesAsync();
+            var entriesWritten = await appContext.SaveChangesAsync();
 
-            return entity;
+            return entriesWritten;
         }
 
         public virtual IQueryable<T> ToQuery() 
