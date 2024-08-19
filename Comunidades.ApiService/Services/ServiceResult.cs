@@ -25,12 +25,13 @@ namespace Comunidades.ApiService.Services
 
         public bool Succeeded { get; protected set; }
         public string? Message { get; protected set; }
-        public virtual object? Data { get; protected set; } = null;
+        public object? Data { get; protected set; } = null;
 
-        public ServiceResult(bool succeeded, string? message, HttpStatusCode statusCode)
+        public ServiceResult(bool succeeded, string? message, HttpStatusCode statusCode, object? data = null)
         {
             Succeeded = succeeded;
             Message = message;
+            Data = data;
             _statusCode = statusCode;
         }
 
