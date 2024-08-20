@@ -17,7 +17,7 @@ namespace Comunidades.Tests.Api
         protected BaseTest() 
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            AppDbContextMock = new Mock<AppDbContext>(optionsBuilder.Options, false);
+            AppDbContextMock = new Mock<AppDbContext>(optionsBuilder.Options);
         }
     }
 }

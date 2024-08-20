@@ -2,7 +2,9 @@
 
 namespace Comunidades.ApiService.Repositories.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<UserEntity>
+    public interface IUserRepository :
+        ICreatableRepository<UserEntity>,
+        ISelectableRepository<UserEntity>
     {
     }
 }

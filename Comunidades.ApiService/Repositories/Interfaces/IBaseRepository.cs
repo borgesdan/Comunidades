@@ -1,5 +1,4 @@
-﻿using Comunidades.ApiService.Models.Data;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Comunidades.ApiService.Repositories.Interfaces
 {

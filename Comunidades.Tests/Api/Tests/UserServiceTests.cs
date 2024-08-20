@@ -24,12 +24,15 @@ namespace Comunidades.Tests.Api.Tests
         public async Task CreateAsync_ReturnOk()
         {
             //Arrange
-            var userCreateRequest = new UserCreatePostRequestBuilder()
+            var request = new UserCreatePostRequestBuilder()
                 .Default()
                 .Get();
+           
+            userRepository.MockSelectAsync(0);
+            userRepository.MockCreateAsync(1);
 
             //Act
-            var result = await userService.Object.CreateAsync(userCreateRequest!);            
+            var result = await userService.Object.CreateAsync(request!);            
             var data = result.GetData<UserCreatePostResponse>();
 
             //Assert

@@ -1,22 +1,16 @@
 ﻿using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Repositories;
 using Moq;
-using System;
 using System.Linq.Expressions;
 
 namespace Comunidades.Tests.Api.MockExtensions.Repositories
 {
     public static class UserRepositoryMockExtensions
     {
-        public static void MockCreateAsync(this Mock<UserRepository> mock, UserEntity @return)
+        public static void MockCreateAsync(this Mock<UserRepository> mock, int @return)
             => mock
             .Setup(m => m.CreateAsync(It.IsAny<UserEntity>()))
-            .ReturnsAsync(@return);
-
-        public static void MockToQuery(this Mock<UserRepository> mock, IQueryable<UserEntity> @return)
-            => mock
-            .Setup(m => m.ToQuery())
-            .Returns(@return);
+            .ReturnsAsync(@return);       
 
         public static void MockSelectAsync<TSeletedType>(this Mock<UserRepository> mock, TSeletedType @return) 
             => mock
