@@ -4,8 +4,8 @@ namespace Comunidades.ApiService.Shared
 {
     public class Password
     {
-        public string? Hash { get; set; }
-        public string? Salt { get; set; }
+        public string Hash { get; set; } = string.Empty;
+        public string Salt { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtém um objeto PasswordHash. O salt será criado internamente caso seja nulo.

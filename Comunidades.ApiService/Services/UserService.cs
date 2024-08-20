@@ -42,9 +42,9 @@ namespace Comunidades.ApiService.Services
             //Nossa entidade
             var entity = new UserEntity
             {
-                FullName = request.FullName,
-                UserName = request.UserName,
-                Email = request.Email,
+                FullName = request.FullName!,
+                UserName = request.UserName!,
+                Email = request.Email!,
                 Uid = Guid.NewGuid(),
                 Status = Models.Enums.DataStatus.Active,
                 CreationDate = dateNow,
@@ -62,7 +62,10 @@ namespace Comunidades.ApiService.Services
                 if (matchedEmailEntity != null)
                     return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
 
-                await userRepository.CreateAsync(entity);
+                var createResult = await userRepository.CreateAsync(entity);
+
+                if (createResult == 0)
+                    InternalError(ErrorEnum.InternalCreateDbError);
             }
             catch(DbUpdateException)
             {

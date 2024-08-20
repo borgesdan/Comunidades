@@ -53,7 +53,7 @@ namespace Comunidades.ApiService.Services
                 var createResult = await communityRepository.CreateAsync(community);
 
                 if (createResult == 0)
-                    return InternalError(ErrorEnum.InternalCreateCommunityError);
+                    return InternalError(ErrorEnum.InternalCreateDbError);
 
                 var response = new CommunityCreatePostResponse() { Uid = community.Uid };
 

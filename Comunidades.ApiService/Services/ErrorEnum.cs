@@ -12,8 +12,8 @@ namespace Comunidades.ApiService.Services
         InternalError = 0,
         [Description("Ocorreu um erro interno de acesso ao banco.")]
         InternalDbError,
-        [Description("Ocorreu um erro não experado ao criar a comunidad.")]
-        InternalCreateCommunityError,
+        [Description("Ocorreu um erro não experado ao realizar a inserção de dados.")]
+        InternalCreateDbError,
 
         //
         // User
