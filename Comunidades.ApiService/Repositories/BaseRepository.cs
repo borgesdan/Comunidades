@@ -36,15 +36,10 @@ namespace Comunidades.ApiService.Repositories
             return entriesWritten;
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression)
+        public virtual async Task<IEnumerable<T>> GetManyAsync(Expression<Func<T, bool>> whereExpression)
         {
             return await appContext.Set<T>().Where(whereExpression).ToListAsync();
-        }
-
-        public virtual async Task<T?> GetAsync(int id)
-        {
-            return await appContext.Set<T>().Where(e => e.Id == id).FirstOrDefaultAsync();
-        }
+        }       
 
         public virtual async Task<T?> GetAsync(Expression<Func<T, bool>> whereExpression)
         {
@@ -80,6 +75,14 @@ namespace Comunidades.ApiService.Repositories
             query = query.Where(whereExpression);
             var query2 = query.Select(selector);
             return await query2.FirstOrDefaultAsync();
+        }
+
+        public virtual async Task<IEnumerable<TSeletedType?>> SelectManyAsync<TSeletedType>(Expression<Func<T, IEnumerable<TSeletedType>>> selector, Expression<Func<T, bool>> whereExpression)
+        {
+            var query = ToQuery();
+            query = query.Where(whereExpression);
+            var query2 = query.SelectMany(selector);
+            return await query2.ToListAsync();
         }
     }
 }

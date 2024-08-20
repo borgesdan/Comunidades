@@ -11,19 +11,23 @@ namespace Comunidades.ApiService.Repositories.Interfaces
         Task<int> UpdateAsync(T entity);
         /// <summary>Deleta um registro no banco de dados.</summary>
         Task<int> DeleteAsync(T entity);
-        /// <summary>Obtém um registro do banco de dados.</summary>
-        Task<T?> GetAsync(int id);
         /// <summary>Obtém um registro do banco de dados através de uma condição.</summary>
         Task<T?> GetAsync(Expression<Func<T, bool>> whereExpression);
-        /// <summary>Obtém todos os registros no banco de dados através de uma condição.</summary>
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression);
-        /// <summary>Obtém um objeto IQueryable para fórmulas de consulta e acesso ao banco.</summary>
-        public IQueryable<T> ToQuery();
+        /// <summary>Obtém vários registros no banco de dados através de uma condição.</summary>
+        Task<IEnumerable<T>> GetManyAsync(Expression<Func<T, bool>> whereExpression);        
         /// <summary>
         /// Realiza um select na base de dados com a informação do tipo de destino.
         /// </summary>
         /// <param name="expression">A expressão com os dados de T a serem selecionados para o tipo de destino.</param>
         /// <param name="whereExpression">A expressão de condição da consulta</param>
         Task<TSeletedType?> SelectAsync<TSeletedType>(Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression);
+        /// <summary>
+        /// Realiza um select na base de dados com a informação do tipo de destino e retorna mais de um registro.
+        /// </summary>
+        /// <param name="expression">A expressão com os dados de T a serem selecionados para o tipo de destino.</param>
+        /// <param name="whereExpression">A expressão de condição da consulta</param>
+        Task<IEnumerable<TSeletedType?>> SelectManyAsync<TSeletedType>(Expression<Func<T, IEnumerable<TSeletedType>>> selector, Expression<Func<T, bool>> whereExpression);
+        /// <summary>Obtém um objeto IQueryable para fórmulas de consulta e acesso ao banco.</summary>
+        public IQueryable<T> ToQuery();
     }
 }
