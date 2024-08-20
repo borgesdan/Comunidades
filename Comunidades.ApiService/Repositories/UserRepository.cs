@@ -24,5 +24,10 @@ namespace Comunidades.ApiService.Repositories
         {
             return await this.SelectManyAsync(appContext, selector, whereExpression);
         }
+
+        public virtual async Task<int> CountAsync(Expression<Func<UserEntity, bool>> whereExpression)
+        {
+            return await this.CountAsync(appContext, whereExpression);
+        }
     }
 }

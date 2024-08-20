@@ -46,7 +46,7 @@ namespace Comunidades.ApiService.Repositories.Interfaces
     {
         /// <summary>Deleta um registro no banco de dados.</summary>
         Task<int> DeleteAsync(T entity);
-    }       
+    }           
 
     /// <summary>
     /// Representa um repositório que realizar operações de criação, atualização, deleção e seleção de dados.

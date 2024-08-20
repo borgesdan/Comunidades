@@ -16,5 +16,10 @@ namespace Comunidades.Tests.Api.MockExtensions.Repositories
             => mock
             .Setup(m => m.SelectAsync(It.IsAny<Expression<Func<UserEntity, TSeletedType>>>(), It.IsAny<Expression<Func<UserEntity, bool>>>()))
             .ReturnsAsync(@return);
+
+        public static void MockCountAsync(this Mock<UserRepository> mock, int @return)
+           => mock
+           .Setup(m => m.CountAsync(It.IsAny<Expression<Func<UserEntity, bool>>>()))
+           .ReturnsAsync(@return);
     }
 }

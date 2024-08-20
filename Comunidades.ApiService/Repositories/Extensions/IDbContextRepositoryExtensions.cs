@@ -98,5 +98,19 @@ namespace Comunidades.ApiService.Repositories.Extensions
             var query2 = query.SelectMany(selector);
             return await query2.ToListAsync();
         }
+
+        /// <summary>
+        /// Método de extensão IReadableRepository responsável por retornar a quantidade de items por uma condição
+        /// </summary>
+        /// <typeparam name="T">Um tipo referência</typeparam>
+        /// <typeparam name="TSeletedType">O tipo a ser retornado com a 
+        /// <param name="repository">Uma classe que implementa IUpdatableRepository</param>
+        /// <param name="context">O contexto do EntityFramework.</param>
+        /// <param name="whereExpression">A expressão de condição para filtragem dos dados.</param>
+        /// <returns>Retorna a quantidade de items.</returns>
+        public static async Task<int> CountAsync<T>(this IReadableRepository<T> repository, DbContext context, Expression<Func<T, bool>> whereExpression) where T : class
+        {
+            return await context.Set<T>().CountAsync(whereExpression);
+        }
     }
 }

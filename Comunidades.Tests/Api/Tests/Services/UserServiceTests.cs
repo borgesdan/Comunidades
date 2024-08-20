@@ -28,7 +28,7 @@ namespace Comunidades.Tests.Api.Tests.Services
                 .Default()
                 .Get();
 
-            userRepository.MockSelectAsync(0);
+            userRepository.MockCountAsync(0);
             userRepository.MockCreateAsync(1);
 
             //Act

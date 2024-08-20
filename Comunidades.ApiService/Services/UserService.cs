@@ -56,10 +56,10 @@ namespace Comunidades.ApiService.Services
             //Postagem no banco
             try
             {
-                //Validação de email já existente.
-                var matchedEmailEntity = await userRepository.SelectAsync(e => new UserEntity() { Email = e.Email }, e => e.Email == request.Email);
+                //Validação de email já existente.                
+                var matchedEmailEntity = await userRepository.CountAsync(e => e.Email == request.Email);
 
-                if (matchedEmailEntity != null)
+                if (matchedEmailEntity != 0)
                     return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
 
                 var createResult = await userRepository.CreateAsync(entity);
