@@ -73,7 +73,7 @@ namespace Comunidades.ApiService.Repositories.Extensions
         /// <param name="selector">A expressão de seleção dos dados.</param>
         /// <param name="whereExpression">A expressão de condição para filtragem dos dados.</param>
         /// <returns>Retorna os dados selecionados pela condição informada com o tipo especificado.</returns>
-        public static async Task<TSeletedType?> SelectAsync<T, TSeletedType>(this ISelectableRepository<T> repository, DbContext context, Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression) where T : class
+        public static async Task<TSeletedType?> SelectAsync<T, TSeletedType>(this IReadableRepository<T> repository, DbContext context, Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression) where T : class
         {
             var query = context.Set<T>().AsQueryable();
             query = query.Where(whereExpression);
@@ -91,7 +91,7 @@ namespace Comunidades.ApiService.Repositories.Extensions
         /// <param name="selector">A expressão de seleção dos dados.</param>
         /// <param name="whereExpression">A expressão de condição para filtragem dos dados.</param>
         /// <returns>Retorna os dados selecionados pela condição informada com o tipo especificado em uma lista enumerável.</returns>
-        public static async Task<IEnumerable<TSeletedType?>> SelectManyAsync<T, TSeletedType>(this ISelectableRepository<T> repository, DbContext context, Expression<Func<T, IEnumerable<TSeletedType>>> selector, Expression<Func<T, bool>> whereExpression) where T : class
+        public static async Task<IEnumerable<TSeletedType?>> SelectManyAsync<T, TSeletedType>(this IReadableRepository<T> repository, DbContext context, Expression<Func<T, IEnumerable<TSeletedType>>> selector, Expression<Func<T, bool>> whereExpression) where T : class
         {
             var query = context.Set<T>().AsQueryable();
             query = query.Where(whereExpression);

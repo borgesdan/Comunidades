@@ -4,7 +4,7 @@ namespace Comunidades.ApiService.Repositories.Interfaces
 {
     public interface IUserRepository :
         ICreatableRepository<UserEntity>,
-        ISelectableRepository<UserEntity>
+        IReadableRepository<UserEntity>
     {
     }
 }

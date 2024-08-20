@@ -12,27 +12,9 @@ namespace Comunidades.ApiService.Repositories.Interfaces
     }
 
     /// <summary>
-    /// Representa um repositório capaz de atualizar dados.
+    /// Representa um repositório capaz de ler dados.
     /// </summary>
-    public interface IUpdatableRepository<T>
-    {
-        /// <summary>Atualiza um registro no banco de dados.</summary>
-        Task<int> UpdateAsync(T entity);
-    }
-
-    /// <summary>
-    /// Representa um repositório capaz de deletar dados.
-    /// </summary>
-    public interface IDeletableRepository<T>
-    {
-        /// <summary>Deleta um registro no banco de dados.</summary>
-        Task<int> DeleteAsync(T entity);
-    }   
-
-    /// <summary>
-    /// Representa um repositório capaz de selecionar dados.
-    /// </summary>
-    public interface ISelectableRepository<T>
+    public interface IReadableRepository<T>
     {
         /// <summary>
         /// Realiza um select na base de dados com a informação do tipo de destino.
@@ -49,11 +31,29 @@ namespace Comunidades.ApiService.Repositories.Interfaces
     }
 
     /// <summary>
+    /// Representa um repositório capaz de atualizar dados.
+    /// </summary>
+    public interface IUpdatableRepository<T>
+    {
+        /// <summary>Atualiza um registro no banco de dados.</summary>
+        Task<int> UpdateAsync(T entity);
+    }
+
+    /// <summary>
+    /// Representa um repositório capaz de deletar dados.
+    /// </summary>
+    public interface IDeletableRepository<T>
+    {
+        /// <summary>Deleta um registro no banco de dados.</summary>
+        Task<int> DeleteAsync(T entity);
+    }       
+
+    /// <summary>
     /// Representa um repositório que realizar operações de criação, atualização, deleção e seleção de dados.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IBaseRepository<T> 
-        : ICreatableRepository<T>, IUpdatableRepository<T>, IDeletableRepository<T>, ISelectableRepository<T> where T: class
+        : ICreatableRepository<T>, IUpdatableRepository<T>, IDeletableRepository<T>, IReadableRepository<T> where T: class
     {
 
     }
