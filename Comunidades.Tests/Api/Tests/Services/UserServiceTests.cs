@@ -7,14 +7,14 @@ using Comunidades.Tests.Api.Builders;
 using Comunidades.Tests.Api.MockExtensions.Repositories;
 using Moq;
 
-namespace Comunidades.Tests.Api.Tests
+namespace Comunidades.Tests.Api.Tests.Services
 {
-    public class UserServiceTests : BaseTest
+    public class UserServiceTests : BaseServiceTest
     {
         readonly Mock<UserRepository> userRepository;
         readonly Mock<UserService> userService;
 
-        public UserServiceTests() 
+        public UserServiceTests()
         {
             userRepository = new Mock<UserRepository>(AppDbContextMock.Object);
             userService = new Mock<UserService>(userRepository.Object);
@@ -27,12 +27,12 @@ namespace Comunidades.Tests.Api.Tests
             var request = new UserCreatePostRequestBuilder()
                 .Default()
                 .Get();
-           
+
             userRepository.MockSelectAsync(0);
             userRepository.MockCreateAsync(1);
 
             //Act
-            var result = await userService.Object.CreateAsync(request!);            
+            var result = await userService.Object.CreateAsync(request!);
             var data = result.GetData<UserCreatePostResponse>();
 
             //Assert
@@ -57,8 +57,8 @@ namespace Comunidades.Tests.Api.Tests
                 Email = request.Email,
                 PasswordHash = passwordHash.Hash,
                 PasswordSalt = "0",
-            };           
-            
+            };
+
             userRepository.MockSelectAsync(userEntity);
 
             var result = await userService.Object.LoginAsync(request);

@@ -21,7 +21,9 @@ var connectionString = builder.Configuration.GetConnectionString("localhost");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString, null));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICommunityRepository, CommunityRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICommunityService, CommunityService>();
 
 builder.Services.AddCors();
 builder.Services.AddAuthorization();

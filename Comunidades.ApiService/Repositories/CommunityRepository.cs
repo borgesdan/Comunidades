@@ -11,7 +11,7 @@ namespace Comunidades.ApiService.Repositories
     {
         public CommunityRepository(AppDbContext context) : base(context) { }
 
-        public Task<int> CreateAsync(CommunityEntity entity)
+        public virtual Task<int> CreateAsync(CommunityEntity entity)
         {
             return this.CreateAsync(appContext, entity);
         }
