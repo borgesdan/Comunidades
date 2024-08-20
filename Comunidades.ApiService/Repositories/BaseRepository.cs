@@ -9,7 +9,11 @@ namespace Comunidades.ApiService.Repositories
     /// <summary>
     /// Repositório base que implementa métodos de acesso ao banco com EntityFramework.
     /// </summary>
-    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
+    public class BaseRepository<T> :
+        ICreatableRepository<T>,
+        IUpdatableRepository<T>,
+        IDeletableRepository<T>,
+        ISelectableRepository<T> where T : class
     {
         protected AppDbContext appContext;
 
@@ -18,6 +22,12 @@ namespace Comunidades.ApiService.Repositories
         public BaseRepository(AppDbContext appContext)
         {
             this.appContext = appContext ?? throw new ArgumentNullException(nameof(appContext));
+        }
+
+        public virtual IQueryable<T> ToQuery()
+        {
+            var query = appContext.Set<T>().AsQueryable();
+            return query;
         }
 
         public virtual async Task<int> CreateAsync(T entity)
@@ -34,17 +44,7 @@ namespace Comunidades.ApiService.Repositories
             var entriesWritten = await appContext.SaveChangesAsync();
 
             return entriesWritten;
-        }
-
-        public virtual async Task<IEnumerable<T>> GetManyAsync(Expression<Func<T, bool>> whereExpression)
-        {
-            return await appContext.Set<T>().Where(whereExpression).ToListAsync();
         }       
-
-        public virtual async Task<T?> GetAsync(Expression<Func<T, bool>> whereExpression)
-        {
-            return await appContext.Set<T>().Where(whereExpression).FirstOrDefaultAsync();
-        }
 
         public virtual async Task<int> UpdateAsync(T entity)
         {
@@ -52,22 +52,7 @@ namespace Comunidades.ApiService.Repositories
             var entriesWritten = await appContext.SaveChangesAsync();
 
             return entriesWritten;
-        }
-
-        public virtual IQueryable<T> ToQuery() 
-        {
-            var query = appContext.Set<T>().AsQueryable();
-            return query;
-        }
-
-        public virtual async Task<T?> SelectAsync(Expression<Func<T, T>> selector, Expression<Func<T, bool>> whereExpression)
-        {
-            var query = ToQuery();
-            query = query.Select(selector);
-            query = query.Where(whereExpression);
-
-            return await query.FirstOrDefaultAsync();
-        }
+        }                
 
         public virtual async Task<TSeletedType?> SelectAsync<TSeletedType>(Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression)
         {

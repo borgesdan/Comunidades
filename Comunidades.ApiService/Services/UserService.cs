@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Comunidades.ApiService.Extensions;
+﻿using Comunidades.ApiService.Extensions;
 using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Requests;
 using Comunidades.ApiService.Models.Responses;
@@ -8,7 +7,6 @@ using Comunidades.ApiService.Services.Interfaces;
 using Comunidades.ApiService.Services.Validations;
 using Comunidades.ApiService.Shared;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace Comunidades.ApiService.Services
 {
