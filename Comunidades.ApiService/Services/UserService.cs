@@ -4,6 +4,7 @@ using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Requests;
 using Comunidades.ApiService.Models.Responses;
 using Comunidades.ApiService.Repositories.Interfaces;
+using Comunidades.ApiService.Services.Helpers;
 using Comunidades.ApiService.Services.Interfaces;
 using Comunidades.ApiService.Services.Validations;
 using Comunidades.ApiService.Shared;
@@ -54,7 +55,7 @@ namespace Comunidades.ApiService.Services
             
             try
             {
-                var hasUser = await HasUserBy(request.Email!);
+                var hasUser = await UserServiceHelper.HasUserBy(request.Email!, userRepository);
 
                 if (hasUser)
                     return BadRequest(ErrorEnum.UserEmailAlreadyExists.GetDescription());
@@ -126,16 +127,6 @@ namespace Comunidades.ApiService.Services
             {
                 return InternalError(ErrorEnum.InternalDbError.GetDescription());
             }            
-        }
-        
-        /// <summary>
-        /// Obtém true caso exista o usuário por um email.
-        /// </summary>
-        private async Task<bool> HasUserBy(string email)
-        {             
-            var matchedEmailEntity = await userRepository.CountAsync(e => e.Email == email);
-
-            return matchedEmailEntity != 0;
         }
     }    
 }
