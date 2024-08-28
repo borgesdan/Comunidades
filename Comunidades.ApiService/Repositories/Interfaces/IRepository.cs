@@ -21,13 +21,7 @@ namespace Comunidades.ApiService.Repositories.Interfaces
         /// </summary>
         /// <param name="expression">A expressão com os dados de T a serem selecionados para o tipo de destino.</param>
         /// <param name="whereExpression">A expressão de condição da consulta</param>
-        Task<TSeletedType?> SelectAsync<TSeletedType>(Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression);
-        /// <summary>
-        /// Realiza um select na base de dados com a informação do tipo de destino e retorna mais de um registro.
-        /// </summary>
-        /// <param name="expression">A expressão com os dados de T a serem selecionados para o tipo de destino.</param>
-        /// <param name="whereExpression">A expressão de condição da consulta</param>
-        Task<IEnumerable<TSeletedType?>> SelectManyAsync<TSeletedType>(Expression<Func<T, IEnumerable<TSeletedType>>> selector, Expression<Func<T, bool>> whereExpression);
+        Task<TSeletedType?> SelectAsync<TSeletedType>(Expression<Func<T, TSeletedType>> selector, Expression<Func<T, bool>> whereExpression);        
     }
 
     /// <summary>

@@ -18,12 +18,7 @@ namespace Comunidades.ApiService.Repositories
         public virtual async Task<TSeletedType?> SelectAsync<TSeletedType>(Expression<Func<UserEntity, TSeletedType>> selector, Expression<Func<UserEntity, bool>> whereExpression)
         {
             return await this.SelectAsync(appContext, selector, whereExpression);
-        }
-
-        public virtual async Task<IEnumerable<TSeletedType?>> SelectManyAsync<TSeletedType>(Expression<Func<UserEntity, IEnumerable<TSeletedType>>> selector, Expression<Func<UserEntity, bool>> whereExpression)
-        {
-            return await this.SelectManyAsync(appContext, selector, whereExpression);
-        }
+        }        
 
         public virtual async Task<int> CountAsync(Expression<Func<UserEntity, bool>> whereExpression)
         {
