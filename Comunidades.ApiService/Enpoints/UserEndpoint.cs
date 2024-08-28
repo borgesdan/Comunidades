@@ -9,7 +9,7 @@ namespace Comunidades.ApiService.Enpoints
     {
         public static void UseUserEndpoints(this WebApplication app) 
         {
-            app.MapPost("/api/v1/user/create", Create)
+            app.MapPost("/api/v1/user/", Create)
                 .WithGroupName("User");
 
             app.MapPost("/api/v1/user/login", Login)
