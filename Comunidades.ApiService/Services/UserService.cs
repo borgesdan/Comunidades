@@ -83,7 +83,6 @@ namespace Comunidades.ApiService.Services
         /// </summary>
         public async Task<IServiceResult> LoginAsync(UserLoginPostRequest request)
         {
-            //Validações da requisição
             request.Sanitize();
 
             var result = ValidatorHelper.Validate<UserLoginPostValidation, UserLoginPostRequest>(request);
@@ -93,9 +92,6 @@ namespace Comunidades.ApiService.Services
 
             try
             {
-                //Acesso ao banco
-                UserLoginPostResponse? response = null;
-
                 var userEntity = await userRepository.SelectAsync(e => new UserEntity()
                 {
                     PasswordHash = e.PasswordHash,
@@ -104,9 +100,7 @@ namespace Comunidades.ApiService.Services
                 }, e => e.Email == request.Email);
 
                 if (userEntity == null)
-                {
                     return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
-                }
 
                 var requestHash = Password.GetPasswordHash(request.Password!, userEntity.PasswordSalt);
 
@@ -115,7 +109,7 @@ namespace Comunidades.ApiService.Services
 
                 var token = BearerToken.Generate(DateTime.Now.Add(TimeSpan.FromDays(30)));
 
-                response = new UserLoginPostResponse()
+                var response = new UserLoginPostResponse()
                 {
                     Token = token,
                 };
