@@ -36,7 +36,7 @@ namespace Comunidades.ApiService.Services
         [Description("Os dados de entrada são inválidos.")]
         UserInvalidLogin,
         [Description("O email informado já está cadastrado.")]
-        UserRegisterInvalidEmail,
+        UserEmailAlreadyExists,
 
         //
         // Community

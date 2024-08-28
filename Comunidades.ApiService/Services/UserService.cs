@@ -1,4 +1,5 @@
-﻿using Comunidades.ApiService.Extensions;
+﻿using Azure.Core;
+using Comunidades.ApiService.Extensions;
 using Comunidades.ApiService.Models.Data;
 using Comunidades.ApiService.Models.Requests;
 using Comunidades.ApiService.Models.Responses;
@@ -34,12 +35,10 @@ namespace Comunidades.ApiService.Services
 
             if (!result.IsValid)
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
-
-            //Definição do hash do password
+            
             var password = Password.GetPasswordHash(request.Password!);
             var dateNow = DateTime.Now;
-
-            //Nossa entidade
+            
             var entity = new UserEntity
             {
                 FullName = request.FullName!,
@@ -52,15 +51,13 @@ namespace Comunidades.ApiService.Services
                 PasswordHash = password.Hash,
                 PasswordSalt = password.Salt,
             };
-
-            //Postagem no banco
+            
             try
             {
-                //Validação de email já existente.                
-                var matchedEmailEntity = await userRepository.CountAsync(e => e.Email == request.Email);
+                var hasUser = await HasUserBy(request.Email!);
 
-                if (matchedEmailEntity != 0)
-                    return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
+                if (hasUser)
+                    return BadRequest(ErrorEnum.UserEmailAlreadyExists.GetDescription());
 
                 var createResult = await userRepository.CreateAsync(entity);
 
@@ -68,9 +65,8 @@ namespace Comunidades.ApiService.Services
                     InternalError(ErrorEnum.InternalCreateDbError);
             }
             catch(DbUpdateException)
-            {
-                //Caso a validação anterior falhe, a exceção DbUpdateException significa que o email já existia no banco
-                return BadRequest(ErrorEnum.UserRegisterInvalidEmail.GetDescription());
+            {                
+                return BadRequest(ErrorEnum.UserEmailAlreadyExists.GetDescription());
             }
             catch
             {
@@ -130,6 +126,16 @@ namespace Comunidades.ApiService.Services
             {
                 return InternalError(ErrorEnum.InternalDbError.GetDescription());
             }            
-        }                
+        }
+        
+        /// <summary>
+        /// Obtém true caso exista o usuário por um email.
+        /// </summary>
+        private async Task<bool> HasUserBy(string email)
+        {             
+            var matchedEmailEntity = await userRepository.CountAsync(e => e.Email == email);
+
+            return matchedEmailEntity != 0;
+        }
     }    
 }
