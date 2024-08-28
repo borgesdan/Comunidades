@@ -37,22 +37,6 @@ namespace Comunidades.ApiService.Services
             if (!result.IsValid)
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
             
-            var password = Password.GetPasswordHash(request.Password!);
-            var dateNow = DateTime.Now;
-            
-            var entity = new UserEntity
-            {
-                FullName = request.FullName!,
-                UserName = request.UserName!,
-                Email = request.Email!,
-                Uid = Guid.NewGuid(),
-                Status = Models.Enums.DataStatus.Active,
-                CreationDate = dateNow,
-                LastModification = dateNow,
-                PasswordHash = password.Hash,
-                PasswordSalt = password.Salt,
-            };
-            
             try
             {
                 var hasUser = await UserServiceHelper.HasUserBy(request.Email!, userRepository);
@@ -60,10 +44,29 @@ namespace Comunidades.ApiService.Services
                 if (hasUser)
                     return BadRequest(ErrorEnum.UserEmailAlreadyExists.GetDescription());
 
+                var password = Password.GetPasswordHash(request.Password!);
+                var dateNow = DateTime.Now;
+
+                var entity = new UserEntity
+                {
+                    FullName = request.FullName!,
+                    UserName = request.UserName!,
+                    Email = request.Email!,
+                    Uid = Guid.NewGuid(),
+                    Status = Models.Enums.DataStatus.Active,
+                    CreationDate = dateNow,
+                    LastModification = dateNow,
+                    PasswordHash = password.Hash,
+                    PasswordSalt = password.Salt,
+                };
+
                 var createResult = await userRepository.CreateAsync(entity);
 
                 if (createResult == 0)
                     InternalError(ErrorEnum.InternalCreateDbError);
+
+                var response = new UserCreatePostResponse() { Uid = entity.Uid };
+                return Ok(response);
             }
             catch(DbUpdateException)
             {                
@@ -73,10 +76,6 @@ namespace Comunidades.ApiService.Services
             {
                 return InternalError(ErrorEnum.InternalDbError.GetDescription());
             }
-
-            //Ok
-            var response = new UserCreatePostResponse() { Uid = entity.Uid };
-            return Ok(response);
         }
 
         /// <summary>
