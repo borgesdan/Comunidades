@@ -23,16 +23,7 @@ namespace Comunidades.ApiService.Models.Data
 
         [StringLength(EmailLength)]
         [Required(AllowEmptyStrings = false)]
-        public string Email { get; set; } = null!;
-
-        [Required]
-        public DateTime CreationDate { get; set; }        
-
-        [Required]
-        public DateTime LastModification { get; set; }
-
-        [Required]
-        public DataStatus Status { get; set; }
+        public string Email { get; set; } = null!;               
 
         [StringLength(PasswordHashLength)]
         [Required(AllowEmptyStrings = false)]
@@ -40,9 +31,19 @@ namespace Comunidades.ApiService.Models.Data
 
         [StringLength(PasswordSaltLength)]
         [Required(AllowEmptyStrings = false)]
-        public string PasswordSalt { get; set; } = null!;
+        public string PasswordSalt { get; set; } = null!;        
+
+        [Required]
+        public DateTime LastModification { get; set; }
+
+        [Required]
+        public DateTime CreationDate { get; set; }
+
+        [Required]
+        public DataStatus Status { get; set; }
 
         public ICollection<CommunityEntity> Communities { get; set; } = [];
+        public ICollection<UserLoginRegistryEntity> LoginRegisters { get; set; } = [];
 
         /// <summary>
         /// O tamanho máximo para um nome. O valor representa o número de caracteres do nome de D. Pedro I.

@@ -18,10 +18,12 @@ namespace Comunidades.ApiService.Services
     public class UserService : BaseService, IUserService
     {
         readonly IUserRepository userRepository;
+        readonly IUserLoginRegistryService userLoginRegistryService;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IUserLoginRegistryService userLoginRegistryService)
         {
             this.userRepository = userRepository;
+            this.userLoginRegistryService = userLoginRegistryService;
         }
 
         /// <summary>
@@ -106,6 +108,13 @@ namespace Comunidades.ApiService.Services
 
                 if (userEntity.PasswordHash != requestHash.Hash)
                     return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
+
+                var loginRegistryResult = await userLoginRegistryService.CreateAsync(userEntity.Id);
+
+                if (!loginRegistryResult.Succeeded)
+                {
+                    //Implementar log de registro de login não realizado.
+                }
 
                 var token = BearerToken.Generate(DateTime.Now.Add(TimeSpan.FromDays(30)));
 

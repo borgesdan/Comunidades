@@ -8,10 +8,10 @@ namespace Comunidades.ApiService.Models.Data
     public class CommunityEntity : BaseEntity
     {
         [Required]
-        public int CreatorId { get; set; }
+        public Guid Uid { get; set; }
 
         [Required]
-        public Guid Uid { get; set; }
+        public int CreatorId { get; set; }        
 
         [StringLength(NameLength)]
         [Required(AllowEmptyStrings = false)]
@@ -19,16 +19,16 @@ namespace Comunidades.ApiService.Models.Data
 
         [StringLength(DescriptionLength)]
         [Required(AllowEmptyStrings = false)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = null!;        
 
         [Required]
-        public DateTime CreationDate { get; set; }        
+        public DataStatus Status { get; set; }        
 
         [Required]
         public DateTime LastModification { get; set; }
 
         [Required]
-        public DataStatus Status { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public UserEntity Creator { get; set; } = null!;
 
