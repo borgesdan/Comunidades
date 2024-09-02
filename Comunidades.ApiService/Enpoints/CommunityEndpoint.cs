@@ -7,9 +7,11 @@ namespace Comunidades.ApiService.Enpoints
 {
     public static class CommunityEndpoint
     {
+        private static readonly string source = "/api/v1/community";
+
         public static void UseCommunityEndpoints(this WebApplication app)
         {
-            app.MapPost("/api/v1/community/", Create)
+            app.MapPost(source, Create)
                 .WithGroupName("Community")
                 .RequireAuthorization();
         }

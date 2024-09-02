@@ -7,12 +7,14 @@ namespace Comunidades.ApiService.Enpoints
 {
     public static class UserEndpoint
     {
+        private static readonly string source = "/api/v1/user/";
+
         public static void UseUserEndpoints(this WebApplication app) 
         {
-            app.MapPost("/api/v1/user/", Create)
+            app.MapPost(source, Create)
                 .WithGroupName("User");
 
-            app.MapPost("/api/v1/user/login", Login)
+            app.MapPost(Path.Combine(source, "login"), Login)
                 .WithGroupName("User")
                 .WithSummary("Executa login do usuário");
 
