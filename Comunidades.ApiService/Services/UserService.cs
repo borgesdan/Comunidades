@@ -19,9 +19,14 @@ namespace Comunidades.ApiService.Services
     {
         readonly IUserRepository userRepository;
         readonly IUserLoginRegistryService userLoginRegistryService;
+        readonly ILogger logger;
 
-        public UserService(IUserRepository userRepository, IUserLoginRegistryService userLoginRegistryService)
+        public UserService(
+            ILogger<UserService> logger,
+            IUserRepository userRepository, 
+            IUserLoginRegistryService userLoginRegistryService)
         {
+            this.logger = logger;
             this.userRepository = userRepository;
             this.userLoginRegistryService = userLoginRegistryService;
         }
@@ -44,7 +49,7 @@ namespace Comunidades.ApiService.Services
                 var hasUser = await UserServiceHelper.HasUserBy(request.Email!, userRepository);
 
                 if (hasUser)
-                    return BadRequest(ErrorEnum.UserEmailAlreadyExists.GetDescription());
+                    return BadRequest(ErrorEnum.UserEmailAlreadyExists);
 
                 var password = Password.GetPasswordHash(request.Password!);
                 var dateNow = DateTime.Now;
@@ -65,18 +70,22 @@ namespace Comunidades.ApiService.Services
                 var createResult = await userRepository.CreateAsync(entity);
 
                 if (createResult == 0)
-                    InternalError(ErrorEnum.InternalCreateDbError);
+                {
+                    throw new Exception();
+                }
 
                 var response = new UserCreatePostResponse() { Uid = entity.Uid };
                 return Ok(response);
             }
             catch(DbUpdateException)
-            {                
-                return BadRequest(ErrorEnum.UserEmailAlreadyExists.GetDescription());
+            {
+                logger.LogError("message");
+                return BadRequest(ErrorEnum.UserEmailAlreadyExists);
             }
             catch
             {
-                return InternalError(ErrorEnum.InternalDbError.GetDescription());
+                logger.LogError("message");
+                return InternalError(ErrorEnum.InternalDbError);
             }
         }
 
@@ -90,7 +99,7 @@ namespace Comunidades.ApiService.Services
             var result = ValidatorHelper.Validate<UserLoginPostValidation, UserLoginPostRequest>(request);
 
             if (!result.IsValid)
-                return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
+                return BadRequest(ErrorEnum.UserInvalidLogin);
 
             try
             {
@@ -102,18 +111,18 @@ namespace Comunidades.ApiService.Services
                 }, e => e.Email == request.Email);
 
                 if (userEntity == null)
-                    return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
+                    return BadRequest(ErrorEnum.UserInvalidLogin);
 
                 var requestHash = Password.GetPasswordHash(request.Password!, userEntity.PasswordSalt);
 
                 if (userEntity.PasswordHash != requestHash.Hash)
-                    return BadRequest(ErrorEnum.UserInvalidLogin.GetDescription());
+                    return BadRequest(ErrorEnum.UserInvalidLogin);
 
                 var loginRegistryResult = await userLoginRegistryService.CreateAsync(userEntity.Id);
 
                 if (!loginRegistryResult.Succeeded)
                 {
-                    //Implementar log de registro de login não realizado.
+                    logger.LogWarning("message {DT}", DateTime.UtcNow.ToLongTimeString());
                 }
 
                 var token = BearerToken.Generate(DateTime.Now.Add(TimeSpan.FromDays(30)));
@@ -127,7 +136,8 @@ namespace Comunidades.ApiService.Services
             }
             catch
             {
-                return InternalError(ErrorEnum.InternalDbError.GetDescription());
+                logger.LogError("message");
+                return InternalError(ErrorEnum.InternalDbError);
             }            
         }
     }    

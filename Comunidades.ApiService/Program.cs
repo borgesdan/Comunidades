@@ -22,8 +22,11 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICommunityRepository, CommunityRepository>();
+builder.Services.AddScoped<IUserLoginRegistryRepository, UserLoginRegistryRepository>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICommunityService, CommunityService>();
+builder.Services.AddScoped<IUserLoginRegistryService, UserLoginRegistryService>();
 
 builder.Services.AddCors();
 builder.Services.AddAuthorization();
