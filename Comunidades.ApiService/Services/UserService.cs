@@ -79,12 +79,12 @@ namespace Comunidades.ApiService.Services
             }
             catch(DbUpdateException)
             {
-                logger.LogError("message");
+                logger.LogError("error message");
                 return BadRequest(ErrorEnum.UserEmailAlreadyExists);
             }
             catch
             {
-                logger.LogError("message");
+                logger.LogError("error message");
                 return InternalError(ErrorEnum.InternalDbError);
             }
         }
@@ -118,12 +118,7 @@ namespace Comunidades.ApiService.Services
                 if (userEntity.PasswordHash != requestHash.Hash)
                     return BadRequest(ErrorEnum.UserInvalidLogin);
 
-                var loginRegistryResult = await userLoginRegistryService.CreateAsync(userEntity.Id);
-
-                if (!loginRegistryResult.Succeeded)
-                {
-                    logger.LogWarning("message {DT}", DateTime.UtcNow.ToLongTimeString());
-                }
+                await UserServiceHelper.RegisterLogin(userEntity.Id, userLoginRegistryService, logger);
 
                 var token = BearerToken.Generate(DateTime.Now.Add(TimeSpan.FromDays(30)));
 

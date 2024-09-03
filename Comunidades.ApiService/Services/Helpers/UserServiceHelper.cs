@@ -1,4 +1,5 @@
 ﻿using Comunidades.ApiService.Repositories.Interfaces;
+using Comunidades.ApiService.Services.Interfaces;
 
 namespace Comunidades.ApiService.Services.Helpers
 {
@@ -12,6 +13,21 @@ namespace Comunidades.ApiService.Services.Helpers
             var matchedEmailEntity = await userRepository.CountAsync(e => e.Email == email);
 
             return matchedEmailEntity != 0;
+        }
+
+        /// <summary>
+        /// Registra o login do usuário.
+        /// </summary>
+        public static async Task RegisterLogin(int userId, IUserLoginRegistryService service, ILogger logger)
+        {
+            var loginRegistryResult = await service.CreateAsync(userId);
+
+            var registryCode = loginRegistryResult.StatusCode();
+
+            if (!loginRegistryResult.Succeeded && (int)registryCode < 500)
+            {
+                logger.LogWarning("Unable to register login.");
+            }
         }
     }
 }
